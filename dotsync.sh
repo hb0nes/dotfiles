@@ -54,9 +54,9 @@ function push {
     echo "Copied all dotfiles to $DIR. Now let's commit and push."
     git add -A
     echo "Added."
-    $(git commit -a --allow-empty-message -m '') > /dev/null 2&>1
+    git commit -a --allow-empty-message -m '' > /dev/null 2>&1
     echo "Committed."
-    $(git push) > /dev/null 2&>1
+    git push > /dev/null 2>&1
     echo "Pushed."
 }
 
