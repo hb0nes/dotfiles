@@ -1,5 +1,9 @@
 # Dotfiles
 Store my dotfiles and spread them across different computers easily.
+This works by adding files I need to copy across different machines to the filelist.
+All these files are files in your ~. If you normally store them someplace else, too bad.
+This isn't designed to work that way, it should work out of the box on clean machines with internet access.
+Enjoy.
 
 ## Installing
 1. Clone the repo: **git clone https://github.com/hb0nes/dotfiles.git**
