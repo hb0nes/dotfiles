@@ -61,6 +61,9 @@ ZSH_THEME="refined"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  fast-syntax-highlighting
+  zsh-autosuggestions
+  colored-man-pages
 )
 
 source $ZSH/oh-my-zsh.sh
