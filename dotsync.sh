@@ -52,9 +52,12 @@ function push {
     done
 
     echo "Copied all dotfiles to $DIR. Now let's commit and push."
-    git add *; git add .*
-    git commit -a --allow-empty-message -m ''
-    git push
+    git add -A
+    echo "Added."
+    $(git commit -a --allow-empty-message -m '') > /dev/null 2&>1
+    echo "Committed."
+    $(git push) > /dev/null 2&>1
+    echo "Pushed."
 }
 
 if [[ $1 == 'push' ]]; then
