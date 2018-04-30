@@ -18,6 +18,7 @@ function first-time {
 } 
 
 function pull {
+    mv $DIR/.oh-my-wtf $DIR/.oh-my-zsh > /dev/null 2>&1
     read -p "Pull all dotfiles?" -n 1 ans
     echo
     for file in $(cat filelist); do
@@ -32,6 +33,7 @@ function pull {
             fi
         fi
     done
+    mv $DIR/.oh-my-zsh $DIR/.oh-my-wtf > /dev/null 2>&1
     zsh
 }
 
@@ -50,7 +52,7 @@ function push {
             fi
         fi
     done
-
+    mv $DIR/.oh-my-zsh $DIR/.oh-my-wtf > /dev/null 2>&1
     echo "Copied all dotfiles to $DIR. Now let's commit and push."
     git add -A
     echo "Added."
