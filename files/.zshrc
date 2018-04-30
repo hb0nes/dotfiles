@@ -7,7 +7,6 @@
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
 ZSH_THEME="refined"
 
 # Set list of themes to load
@@ -61,9 +60,8 @@ ZSH_THEME="refined"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  fast-syntax-highlighting
   zsh-autosuggestions
-  colored-man-pages
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -96,10 +94,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export TERM=xterm-256color
+TERM=xterm-256color
 eval $(dircolors -b $HOME/.dircolors)
-cd
-#Aliases
-alias school="cd /mnt/c/Users/b0nes/Desktop/School/"
-tmux source-file ~/.tmux.conf
 tmux
+tmux source-file ~/.tmux_config
+
+alias deploytom="scp -r /mnt/c/Users/HP/Google\ Drive/HvA/FYS/Git/FlightWebApp/target/app.war root@tompi:/opt/tomcat/tomcat-latest/webapps/"
+alias deploylocal="scp -r /mnt/c/Users/HP/Google\ Drive/HvA/FYS/Git/FlightWebApp/target/app.war root@pi:/opt/tomcat/tomcat-latest/webapps/"

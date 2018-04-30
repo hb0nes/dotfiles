@@ -1,5 +1,5 @@
 .zshrc
-.tmux.conf
+.tmux_config
 .vimrc
 .oh-my-zsh
 .dircolors
