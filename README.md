@@ -2,7 +2,7 @@
 Store my dotfiles and spread them across different computers easily.
 
 ## Installing
-1. Clone the repo: **git clone https://github.com/hb0nes/dotfiles**
+1. Clone the repo: **git clone https://github.com/hb0nes/dotfiles.git**
 2. Change directory to cloned repo: **cd dotfiles**
 3. Run: **./dotsync.sh**
     1. **./dotsync pull** - prompts you to pull either all the files or individually acknowledge them.
