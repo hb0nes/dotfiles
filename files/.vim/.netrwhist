@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/root/.oh-my-zsh'
+let g:netrw_dirhist_2='/root/.zsh'
+let g:netrw_dirhist_3='/root/.vim'
+let g:netrw_dirhist_4='/root/.vim/colors'
