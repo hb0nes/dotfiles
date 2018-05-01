@@ -13,10 +13,18 @@ Enjoy.
     2. **./dotsync push** - prompts you to push either all the files or individually acknowledge them. *Please note this is only for people with write access*
     3. **./dotsync first-run** - first installs zsh and oh-my-zsh, then follows pull. 
     4. **./dotsync debug** - prints the directory it'll copy from/to. See source.
-
+*Note: These config files work best with wsl-term. Download it here: https://github.com/goreliu/wsl-terminal*
+*Pick the base16-monokai theme*
 ## Changing HTTP/SSH
 ### Check current remote connection
 git remote -v
 ### Change remote url from HTTP to SSH
 git remote set-url origin git@github.com:hb0nes/dotfiles.git
+
+## Errors
+If after pulling you get an error for YouCompleteMe, try compiling it by:
+1. **cd ~/.vim/bundle/YouCompleteMe/**
+2. **./install.py --clang-completer**
+If you can't compile, you need dependencies. Google it.
+
 
