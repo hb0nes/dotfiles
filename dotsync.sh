@@ -11,6 +11,11 @@ function debug {
 }
 
 function first-time {
+    git fetch > /dev/null 2>&1
+    echo "Fetching."
+    git pull > /dev/null 2>&1
+    echo "Pulling."
+
     #Install tmux
     sudo apt-get install -y tmux
     #Install ZSH
