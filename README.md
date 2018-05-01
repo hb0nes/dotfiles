@@ -13,6 +13,8 @@ Enjoy.
     2. **./dotsync pull** - prompts you to pull either all the files or individually acknowledge them.
     3. **./dotsync push** - prompts you to push either all the files or individually acknowledge them. *Please note this is only for people with write access*
     4. **./dotsync debug** - prints the directory it'll copy from/to.
+
+
 *Note: These config files work best with wsl-term. Download it here: https://github.com/goreliu/wsl-terminal*
 *Tip: Pick the base16-monokai theme*
 
