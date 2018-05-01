@@ -13,7 +13,6 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.p
 
 syntax enable
 colorscheme molokai
-"colorscheme jellybeans
 set t_Co=256
 set t_ut=
 filetype plugin indent on
