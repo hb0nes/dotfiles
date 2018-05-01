@@ -19,10 +19,14 @@ Enjoy.
 *Tip: Pick the base16-monokai theme and "Menlo" font.*
 
 ## Errors
-If after pulling you get an error for YouCompleteMe, try compiling it by:
+You probably need Python on your system.
+If after running ViM you get an error for YouCompleteMe, try compiling it by:
 1. **cd ~/.vim/bundle/YouCompleteMe/**
 2. **./install.py --clang-completer**
-If you can't compile, you need dependencies. Google it.
+If you can't compile, you need dependencies. Vim needs Python support, check with: vim --version | grep -i python. It should show you a + next to python.
+In any case, if you like ViM, you should build it from source and get the latest version (8). 
+
+**In the event you cannot get rid of this error or don't want completion in ViM, get rid of the plugin in ~/.vimrc.**
 
 ## Changing repo to HTTP/SSH 
 *for easier pushing/pulling*
