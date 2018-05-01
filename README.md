@@ -9,10 +9,10 @@ Enjoy.
 1. Clone the repo: **git clone https://github.com/hb0nes/dotfiles.git**
 2. Change directory to cloned repo: **cd dotfiles**
 3. Run: **./dotsync.sh**
-    1. **./dotsync pull** - prompts you to pull either all the files or individually acknowledge them.
-    2. **./dotsync push** - prompts you to push either all the files or individually acknowledge them. *Please note this is only for people with write access*
-    3. **./dotsync first-run** - first installs zsh and oh-my-zsh, then follows pull. 
-    4. **./dotsync debug** - prints the directory it'll copy from/to. See source.
+    1. **./dotsync first-run** - first installs zsh and oh-my-zsh, then calls pull.
+    2. **./dotsync pull** - prompts you to pull either all the files or individually acknowledge them.
+    3. **./dotsync push** - prompts you to push either all the files or individually acknowledge them. *Please note this is only for people with write access*
+    4. **./dotsync debug** - prints the directory it'll copy from/to.
 *Note: These config files work best with wsl-term. Download it here: https://github.com/goreliu/wsl-terminal*
 *Tip: Pick the base16-monokai theme*
 
