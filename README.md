@@ -16,7 +16,7 @@ Enjoy.
 
 
 *Note: These config files work best with wsl-term. Download it here: https://github.com/goreliu/wsl-terminal*
-*Tip: Pick the base16-monokai theme*
+*Tip: Pick the base16-monokai theme and "Menlo" font.*
 
 ## Errors
 If after pulling you get an error for YouCompleteMe, try compiling it by:

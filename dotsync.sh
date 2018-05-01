@@ -11,10 +11,12 @@ function debug {
 }
 
 function first-time {
+    #Install tmux
+    sudo apt-get install -y tmux
     #Install ZSH
-    sudo apt-get install zsh
+    sudo apt-get install -y zsh
     #Install Oh-my-ZSH!
-    sudo sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+#    sudo sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 } 
 
 function pull {
