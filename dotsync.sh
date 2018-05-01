@@ -18,6 +18,10 @@ function first-time {
 } 
 
 function pull {
+    git fetch > /dev/null 2>&1
+    echo "Fetching."
+    git pull > /dev/null 2>&1
+    echo "Pulling."
     mv $DIR/.oh-my-wtf $DIR/.oh-my-zsh > /dev/null 2>&1
     read -p "Pull all dotfiles?" -n 1 ans
     echo
