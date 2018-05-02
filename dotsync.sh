@@ -115,8 +115,7 @@ function installVim {
                                 --enable-cscope \
                                 --prefix=/usr/local
     make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
-    echo -e "\n\n\n\n\n" | checkinstall &
-    sleep 10
+    echo -e "\n\n\n\n\n" | checkinstall 
     #Make YouCompleteMe with Python3.5
     cd ~/.vim/bundle/YouCompleteMe    
     ./install.py --clang-completer
@@ -135,7 +134,6 @@ fi
 
 if [[ $1 == 'first-time' ]]; then
     first-time 
-    pull
 fi
 
 if [[ $1 == 'debug' ]]; then
