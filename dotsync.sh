@@ -22,16 +22,19 @@ function first-time {
     echo -e "The following wizard will ask you to install stuff in this order: \n1.TMUX\n2.ZSH\n3.ViM8"
     #Install tmux
     read -p "Do you want to install TMUX?" -r -n 1
+    echo
     if [[ $REPLY =~ ^[YyJj]$ ]]; then
         sudo apt-get install -y tmux 1>/dev/null
     fi
     #Install ZSH
     read -p "Do you want to install ZSH?" -r -n 1
+    echo
     if [[ $REPLY =~ ^[YyJj]$ ]]; then
         sudo apt-get install -y zsh 1>/dev/null
     fi
     #Install ViM8 
     read -p "Do you want to install ViM 8 with Python3.5 and YouCompleteMe (autocompletion) support? Please note this will take a long time on most systems." -r -n 1
+    echo
     if [[ $REPLY =~ ^[YyJj]$ ]]; then
         installVim
     fi
@@ -82,7 +85,7 @@ function push {
     git push > /dev/null #2>&1
     echo "Pushed."
 }
-function installVim{
+function installVim {
     # install dependencies
     sudo apt install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
     libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
