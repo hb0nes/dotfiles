@@ -11,8 +11,8 @@ function debug {
 }
 
 function first-time {
-    git fetch > /dev/null
-    git pull > /dev/null 
+    sudo git fetch > /dev/null
+    sudo git pull > /dev/null 
 
     for file in $(cat filelist); do
         cp -r $DIR/$file ~
@@ -41,9 +41,9 @@ function first-time {
 } 
 
 function pull {
-    git fetch > /dev/null 2>&1
+    sudo git fetch > /dev/null 2>&1
     echo "Fetching."
-    git pull > /dev/null 2>&1
+    sudo git pull > /dev/null 2>&1
     echo "Pulling."
     read -p "Pull all dotfiles?" -n 1 ans
     echo
@@ -101,10 +101,10 @@ function installVim {
     sudo apt remove -y vim vim-runtime gvim
     #Clone vim repo, configure and make
     cd ~
-    rm -r vim
+    sudo rm -rf vim
     git clone https://github.com/vim/vim.git
     cd vim
-    ./configure --with-features=huge \
+    sudo ./configure --with-features=huge \
                                 --enable-multibyte \
                                 --enable-rubyinterp=yes \
                                 --enable-python3interp=yes \
@@ -115,12 +115,13 @@ function installVim {
                                 --enable-cscope \
                                 --prefix=/usr/local
     make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
-    echo -e "\n\n\n\n\n" | checkinstall 
+    echo -e "\n\n\n\n\n" | sudo checkinstall 
     #Make YouCompleteMe with Python3.5
+    sudo apt-get install build-essential cmake
     cd ~/.vim/bundle/YouCompleteMe    
-    ./install.py --clang-completer
+    sudo ./install.py --clang-completer
 
-    rm -r ~/vim
+    sudo rm -rf ~/vim
     echo "All done!"
 }
 
