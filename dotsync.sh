@@ -117,7 +117,7 @@ function installVim {
     make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
     echo -e "\n\n\n\n\n" | sudo checkinstall 
     #Make YouCompleteMe with Python3.5
-    sudo apt-get install build-essential cmake
+    sudo apt-get install -y build-essential cmake
     cd ~/.vim/bundle/YouCompleteMe    
     sudo ./install.py --clang-completer
 
