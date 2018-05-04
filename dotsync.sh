@@ -22,10 +22,11 @@ function first-time {
 
     # Dependencies
     sudo apt update
+    sudo apt upgrade
     sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
     libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
     libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
-    python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev checkinstall build-essential cmake --fix-missing
+    python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev checkinstall build-essential cmake --fix-missing > /dev/null
     #Install tmux, tmuxinator, zsh, vim80 with youcompleteme plugin
     if [[ ! -f /usr/bin/tmux ]]; then
         sudo apt-get install -y tmux > /dev/null
