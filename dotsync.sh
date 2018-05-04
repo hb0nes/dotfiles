@@ -14,7 +14,7 @@ function first-time {
     sudo git fetch > /dev/null
     sudo git pull > /dev/null 
 
-    for file in $(cat filelist); do
+    for file in $(cat $DIR/../filelist); do
         cp -r $DIR/$file ~
         echo "Copied $DIR/$file to home (~)"
     done
