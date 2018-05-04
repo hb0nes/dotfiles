@@ -19,12 +19,14 @@ function first-time {
         echo "Copied $DIR/$file to home (~)"
     done
     echo "Done copying files to your home (~)."
+
+    # Dependencies
     sudo apt update
     sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
     libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
     libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
     python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev checkinstall build-essential cmake --fix-missing
-
+    #Install tmux, tmuxinator, zsh, vim80 with youcompleteme plugin
     if [[ ! -f /usr/bin/tmux ]]; then
         sudo apt-get install -y tmux > /dev/null
     fi
@@ -37,6 +39,7 @@ function first-time {
     if [[ ! -d /usr/local/share/vim/vim80 ]]; then
         installVim
     fi
+    zsh
     #echo -e "The following wizard will ask you to install stuff in this order: \n1.TMUX\n2.ZSH\n3.ViM8"
     #Install tmux
     #read -p "Do you want to install TMUX?" -r -n 1
