@@ -19,6 +19,11 @@ function first-time {
         echo "Copied $DIR/$file to home (~)"
     done
     echo "Done copying files to your home (~)."
+    sudo apt update
+    sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
+    libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+    libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+    python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev checkinstall build-essential cmake --fix-missing
 
     if [[ ! -f /usr/bin/tmux ]]; then
         sudo apt-get install -y tmux > /dev/null
@@ -101,11 +106,6 @@ function push {
 
 function installVim {
     # install dependencies
-    sudo apt update
-    sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
-    libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-    libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
-    python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git checkinstall --fix-missing
     PYTHONCONFIGDIR=$(ls /usr/lib/python3.5/ | grep -i config | grep -v ".py")
     echo "Python 3.5 config dir: ${PYTHONCONFIGDIR}"
     #Make Python 3.5 Default:
@@ -132,7 +132,6 @@ function installVim {
     #Install that shit
     echo -e "\n\n\n\n\n" | sudo checkinstall 
     #Make YouCompleteMe with Python3.5
-    sudo apt-get install -y build-essential cmake
     cd ~/.vim/bundle/YouCompleteMe    
     sudo ./install.py --clang-completer
     # Cleanup
