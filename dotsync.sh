@@ -19,25 +19,38 @@ function first-time {
         echo "Copied $DIR/$file to home (~)"
     done
     echo "Done copying files to your home (~)."
-    echo -e "The following wizard will ask you to install stuff in this order: \n1.TMUX\n2.ZSH\n3.ViM8"
-    #Install tmux
-    read -p "Do you want to install TMUX?" -r -n 1
-    echo
-    if [[ $REPLY =~ ^[YyJj]$ ]]; then
-        sudo apt-get install -y tmux 1>/dev/null
+
+    if [[ ! -f /usr/bin/tmux ]]; then
+        sudo apt-get install -y tmux > /dev/null
     fi
-    #Install ZSH
-    read -p "Do you want to install ZSH?" -r -n 1
-    echo
-    if [[ $REPLY =~ ^[YyJj]$ ]]; then
-        sudo apt-get install -y zsh 1>/dev/null
+    if [[ ! -f /usr/local/bin/tmuxinator ]]; then
+        gem install tmuxinator
     fi
-    #Install ViM8 
-    read -p "Do you want to install ViM 8 with Python3.5 and YouCompleteMe (autocompletion) support? Please note this will take a long time on most systems." -r -n 1
-    echo
-    if [[ $REPLY =~ ^[YyJj]$ ]]; then
+    if [[ ! -f /bin/zsh5 ]]; then
+        sudo apt-get install -y zsh > /dev/null
+    fi
+    if [[ ! -d /usr/local/share/vim/vim80 ]]; then
         installVim
     fi
+    #echo -e "The following wizard will ask you to install stuff in this order: \n1.TMUX\n2.ZSH\n3.ViM8"
+    #Install tmux
+    #read -p "Do you want to install TMUX?" -r -n 1
+    #echo
+    #if [[ $REPLY =~ ^[YyJj]$ ]]; then
+        #sudo apt-get install -y tmux 1>/dev/null
+    #fi
+    #Install ZSH
+    #read -p "Do you want to install ZSH?" -r -n 1
+    #echo
+    #if [[ $REPLY =~ ^[YyJj]$ ]]; then
+        #sudo apt-get install -y zsh 1>/dev/null
+    #fi
+    #Install ViM8 
+    #read -p "Do you want to install ViM 8 with Python3.5 and YouCompleteMe (autocompletion) support? Please note this will take a long time on most systems." -r -n 1
+    #echo
+    #if [[ $REPLY =~ ^[YyJj]$ ]]; then
+        #installVim
+    #fi
 } 
 
 function pull {
@@ -85,13 +98,14 @@ function push {
     git push > /dev/null #2>&1
     echo "Pushed."
 }
+
 function installVim {
     # install dependencies
-    sudo apt install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
+    sudo apt update
+    sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
     libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
     libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
-    python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git checkinstall
-
+    python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git checkinstall --fix-missing
     PYTHONCONFIGDIR=$(ls /usr/lib/python3.5/ | grep -i config | grep -v ".py")
     echo "Python 3.5 config dir: ${PYTHONCONFIGDIR}"
     #Make Python 3.5 Default:
@@ -115,13 +129,16 @@ function installVim {
                                 --enable-cscope \
                                 --prefix=/usr/local
     make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
+    #Install that shit
     echo -e "\n\n\n\n\n" | sudo checkinstall 
     #Make YouCompleteMe with Python3.5
     sudo apt-get install -y build-essential cmake
     cd ~/.vim/bundle/YouCompleteMe    
     sudo ./install.py --clang-completer
-
+    # Cleanup
     sudo rm -rf ~/vim
+    # make sure ZSH starts even on Win10 WSL
+    echo "zsh" >> ~/.bashrc
     echo "All done!"
 }
 

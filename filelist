@@ -1,5 +1,8 @@
 .zshrc
+.bashrc
+.config
 .tmux_config
+.bin
 .vimrc
 .oh-my-zsh
 .dircolors

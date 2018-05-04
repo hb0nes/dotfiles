@@ -94,10 +94,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-TERM=xterm-256color
+export TERM=xterm-256color
+export EDITOR="vim"
 eval $(dircolors -b $HOME/.dircolors)
-tmux
-tmux source-file ~/.tmux_config
-
+source ~/.bin/tmuxinator.zsh
 alias deploytom="scp -r /mnt/c/Users/HP/Google\ Drive/HvA/FYS/Git/FlightWebApp/target/app.war root@tompi:/opt/tomcat/tomcat-latest/webapps/"
 alias deploylocal="scp -r /mnt/c/Users/HP/Google\ Drive/HvA/FYS/Git/FlightWebApp/target/app.war root@pi:/opt/tomcat/tomcat-latest/webapps/"
+mux start default
