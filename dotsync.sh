@@ -29,15 +29,23 @@ function first-time {
     #Install tmux, tmuxinator, zsh, vim80 with youcompleteme plugin
     if [[ ! -f /usr/bin/tmux ]]; then
         sudo apt-get install -y tmux > /dev/null
+    else
+        echo "Already have tmux installed."
     fi
     if [[ ! -f /usr/local/bin/tmuxinator ]]; then
         gem install tmuxinator
+    else
+        echo "Already have Tmuxinator installed."
     fi
     if [[ ! -f /bin/zsh5 ]]; then
         sudo apt-get install -y zsh > /dev/null
+    else
+        echo "Already have ZSH installed."
     fi
     if [[ ! -d /usr/local/share/vim/vim80 ]]; then
         installVim
+    else
+        echo "Already have ViM80 installed."
     fi
     zsh
     #echo -e "The following wizard will ask you to install stuff in this order: \n1.TMUX\n2.ZSH\n3.ViM8"
