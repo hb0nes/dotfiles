@@ -89,6 +89,5 @@ if [ ! -f ~/timer ]; then
     echo 'Timer!' >> ~/timer
     bash -c "sleep 5; rm -rf ~/timer" &
     tmux kill-session
-    tmuxinator start default
+    tmuxinator start 
 fi
-
