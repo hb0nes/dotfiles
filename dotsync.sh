@@ -47,7 +47,7 @@ function first-time {
     else
         echo "Already have ViM80 installed."
     fi
-    zsh
+    bash
     #echo -e "The following wizard will ask you to install stuff in this order: \n1.TMUX\n2.ZSH\n3.ViM8"
     #Install tmux
     #read -p "Do you want to install TMUX?" -r -n 1
