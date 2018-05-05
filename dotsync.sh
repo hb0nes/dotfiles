@@ -18,6 +18,7 @@ function first-time {
         cp -r $DIR/$file ~
         echo "Copied $DIR/$file to home (~)"
     done
+    mkdir -p $HOME/school
     echo "Done copying files to your home (~)."
 
     # Dependencies
@@ -51,7 +52,7 @@ function first-time {
     #Make YouCompleteMe with Python3.5
     cd ~/.vim/bundle/YouCompleteMe    
     sudo ./install.py --clang-completer
-
+    sleep 3
     bash
     #echo -e "The following wizard will ask you to install stuff in this order: \n1.TMUX\n2.ZSH\n3.ViM8"
     #Install tmux
