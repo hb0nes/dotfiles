@@ -34,7 +34,7 @@ function first-time {
         echo "Already have tmux installed."
     fi
     if [[ ! -f /usr/local/bin/tmuxinator ]]; then
-        gem install tmuxinator
+        sudo gem install tmuxinator
     else
         echo "Already have Tmuxinator installed."
     fi
