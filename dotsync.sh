@@ -47,6 +47,11 @@ function first-time {
     else
         echo "Already have ViM80 installed."
     fi
+
+    #Make YouCompleteMe with Python3.5
+    cd ~/.vim/bundle/YouCompleteMe    
+    sudo ./install.py --clang-completer
+
     bash
     #echo -e "The following wizard will ask you to install stuff in this order: \n1.TMUX\n2.ZSH\n3.ViM8"
     #Install tmux
@@ -142,9 +147,6 @@ function installVim {
     make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
     #Install that shit
     echo -e "\n\n\n\n\n" | sudo checkinstall 
-    #Make YouCompleteMe with Python3.5
-    cd ~/.vim/bundle/YouCompleteMe    
-    sudo ./install.py --clang-completer
     # Cleanup
     sudo rm -rf ~/vim
     # make sure ZSH starts even on Win10 WSL
