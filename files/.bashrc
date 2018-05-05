@@ -85,11 +85,10 @@ fi
 #if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 #    . /etc/bash_completion
 #fi
-if [[ ! -f /tmp/timer ]]; then
-    touch /tmp/timer
-    bash -c "sleep 10; rm -rf /tmp/timer" &
+if [ ! -f ~/timer ]; then
+    echo 'Timer!' >> ~/timer
+    bash -c "sleep 5; rm -rf ~/timer" &
     tmux kill-session
-    echo "Killed it!"
     tmuxinator start default
 fi
 

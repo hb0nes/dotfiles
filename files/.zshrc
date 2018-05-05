@@ -100,4 +100,3 @@ eval $(dircolors -b $HOME/.dircolors)
 source ~/.bin/tmuxinator.zsh
 alias deploytom="scp -r /mnt/c/Users/HP/Google\ Drive/HvA/FYS/Git/FlightWebApp/target/app.war root@tompi:/opt/tomcat/tomcat-latest/webapps/"
 alias deploylocal="scp -r /mnt/c/Users/HP/Google\ Drive/HvA/FYS/Git/FlightWebApp/target/app.war root@pi:/opt/tomcat/tomcat-latest/webapps/"
-mux start default
