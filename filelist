@@ -1,6 +1,5 @@
 .zshrc
 .bashrc
-.config
 .tmux_config
 .tmuxinator.yml
 .bin
