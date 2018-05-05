@@ -85,6 +85,7 @@ fi
 #if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 #    . /etc/bash_completion
 #fi
+source ~/.bin/tmuxinator.zsh
 if [ ! -f ~/timer ]; then
     echo 'Timer!' >> ~/timer
     bash -c "sleep 5; rm -rf ~/timer" &
