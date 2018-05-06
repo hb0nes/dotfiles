@@ -67,7 +67,7 @@ function first-time {
         sudo ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
         sudo /root/.vim/bundle/YouCompleteMe/install.py --clang-completer
         sleep 2
-        bash
+        echo "All done! Please start your terminal."
     fi
 }
 
