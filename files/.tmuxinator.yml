@@ -48,15 +48,15 @@ windows:
       layout: 303d,197x58,0,0[197x39,0,0,121,197x18,0,40{98x18,0,40,124,98x18,99,40,125}]
       panes:
         - vim ~ 
-        - clear
-        - clear
+        - sleep 1; clear
+        - sleep 1; clear
   - school:
       #layout: main-horizontal
       layout: 3046,197x58,0,0[197x39,0,0,122,197x18,0,40{98x18,0,40,126,98x18,99,40,127}]
       panes:
          - vim ~/school
-         - cd school;clear
-         - cd school;clear
+         - cd school;sleep 1;clear
+         - cd school;sleep 1;clear
   - monitor:
       layout: even-horizontal
       panes:
