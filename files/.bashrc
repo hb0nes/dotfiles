@@ -98,4 +98,3 @@ else
         tmuxinator start def
     fi
 fi
-zsh
