@@ -89,6 +89,7 @@ source ~/.bin/tmuxinator.zsh
 tmux_sessions=`tmux list-sessions 2>&1`
 if echo $tmux_sessions | grep -i "no server"; then
     echo 'Start!' >> ~/timer
+    bash -c "sleep 5; rm -rf ~/timer" &
     tmuxinator start
 else
     if [ ! -f ~/timer ]; then
