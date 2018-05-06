@@ -18,7 +18,7 @@ function testRun() {
     echo $DIR
 }
 
-function first-time() {
+function firstTime() {
     if [[ $force == "force" ]]; then
         echo 'Forced install.'
     fi
@@ -163,7 +163,7 @@ while [[ $# > 0 ]]; do
             ;;
         -f|--first-time)
             force=$2
-            first-time $force
+            firstTime $force
             shift # key
             shift # value
             ;;
