@@ -150,7 +150,8 @@ function installVim() {
     echo "All done!"
 }
 
-while [[ $# > 0 ]]; do
+if [[ $# == 0 ]]; then usage; fi
+while [[ $# > 1 ]]; do
     key=$1
     case $key in
         -d|--download)
