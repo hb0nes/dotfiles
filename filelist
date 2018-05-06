@@ -3,7 +3,7 @@
 .tmux_config
 .tmuxinator.yml
 .bin
-.vimrc
 .oh-my-zsh
 .dircolors
 .vim
+.vimrc
