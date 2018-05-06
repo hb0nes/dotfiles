@@ -1,4 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/root'
 let g:netrw_dirhist_2='/root/dotfiles'
+let g:netrw_dirhist_3='/home/hb0nes/school'
+let g:netrw_dirhist_4='/home/hb0nes'

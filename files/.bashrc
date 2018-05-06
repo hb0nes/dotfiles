@@ -85,17 +85,17 @@ fi
 #if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 #    . /etc/bash_completion
 #fi
-source ~/.bin/tmuxinator.zsh
 tmux_sessions=`tmux list-sessions 2>&1`
 if echo $tmux_sessions | grep -i "no server"; then
     echo 'Start!' >> ~/timer
     bash -c "sleep 5; rm -rf ~/timer" &
-    mux start def
+    tmuxinator start def
 else
     if [ ! -f ~/timer ]; then
         echo 'Timer!' >> ~/timer
         bash -c "sleep 5; rm -rf ~/timer" &
         tmux kill-session
-        mux start def
+        tmuxinator start def
     fi
 fi
+zsh
