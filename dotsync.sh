@@ -20,6 +20,7 @@ function first-time {
 
     for file in $(cat $DIR/../filelist); do
         cp -r $DIR/$file ~
+        sudo cp -r $DIR/$file /root/
         echo "Copied $DIR/$file to home (~)"
     done
     mkdir -p $HOME/school
@@ -37,8 +38,8 @@ function first-time {
         sudo gem install tmuxinator
         sudo apt-get install -y zsh > /dev/null
         installVim
-        cd ~/.vim/bundle/YouCompleteMe
-        sudo ./install.py --clang-completer
+        sudo ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+        sudo /root/.vim/bundle/YouCompleteMe/install.py --clang-completer
         sleep 2
         bash
     else
@@ -63,8 +64,8 @@ function first-time {
             echo "Already have ViM80 installed."
         fi
         #Make YouCompleteMe with Python3.5
-        cd ~/.vim/bundle/YouCompleteMe
-        sudo ./install.py --clang-completer
+        sudo ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+        sudo /root/.vim/bundle/YouCompleteMe/install.py --clang-completer
         sleep 2
         bash
     fi
@@ -80,12 +81,13 @@ function pull {
     for file in $(cat filelist); do
         if [[ $ans =~ ^[YyJj]$ ]]; then
             cp -r $DIR/$file ~
+            sudo cp -r $DIR/$file /root/
             echo "Copied $DIR/$file to home (~)"
         else
             read -p "Pull $DIR/$file?" -n 1 -r
             echo
             if [[ $REPLY =~ ^[YyJj]$ ]]; then
-                cp -r $DIR/$file ~
+                sudo cp -r $DIR/$file ~
             fi
         fi
     done
@@ -97,22 +99,22 @@ function push {
     echo
     for file in $(cat filelist); do
         if [[ $ans =~ ^[YyJj]$ ]]; then
-            cp -r ~/$file $DIR
+            sudo cp -r ~/$file $DIR
             echo "Copied $file to $DIR"
         else
             read -p "Push ~/$file?" -n 1 -r
             echo
             if [[ $REPLY =~ ^[YyJj]$ ]]; then
-                cp -r ~/$file $DIR
+                sudo cp -r ~/$file $DIR
             fi
         fi
     done
     echo "Copied all dotfiles to $DIR. Now let's commit and push."
-    git add -A
+    sudo git add -A
     echo "Added."
-    git commit -a --allow-empty-message -m '' > /dev/null #2>&1
+    sudo git commit -a --allow-empty-message -m '' > /dev/null #2>&1
     echo "Committed."
-    git push > /dev/null #2>&1
+    sudo git push > /dev/null #2>&1
     echo "Pushed."
 }
 

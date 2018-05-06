@@ -1,6 +1,6 @@
 # ~/.tmuxinator/default.yml
 
-name: default
+name: def
 root: ~/
 
 # Optional tmux socket

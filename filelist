@@ -1,7 +1,7 @@
 .zshrc
 .bashrc
 .tmux_config
-.tmuxinator.yml
+.tmuxinator
 .bin
 .oh-my-zsh
 .dircolors
