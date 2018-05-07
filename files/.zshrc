@@ -100,3 +100,10 @@ export EDITOR="vim"
 eval $(dircolors -b $HOME/.dircolors)
 alias deploytom="scp -r /mnt/c/Users/HP/Google\ Drive/HvA/FYS/Git/FlightWebApp/target/app.war root@tompi:/opt/tomcat/tomcat-latest/webapps/"
 alias deploylocal="scp -r /mnt/c/Users/HP/Google\ Drive/HvA/FYS/Git/FlightWebApp/target/app.war root@pi:/opt/tomcat/tomcat-latest/webapps/"
+
+function dc() {
+    WINDOWS_PATH=$1
+    MODIFIED_PATH=$(echo -E $WINDOWS_PATH | sed 's:C\:\\:/mnt/c/:' | sed 's:\\:/:g') 
+    echo $MODIFIED_PATH
+    cd "$MODIFIED_PATH"
+}
