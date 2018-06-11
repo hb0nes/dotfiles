@@ -1,0 +1,45 @@
+# High level diagram 
+
+## High level explanation of components
+
+# Deliverables
+
+## Deliverable G-01
+If someone wants to connect to the PFIS with their smart device, all they need to do is connect to the WiFi-Hotspot, called 'CaptivePortal-FYS'.
+Afterwards, their device will recognize that it is indeed a Captive Portal and most likely open a browser to navigate to it.
+Then, after reaching the page, there is no need for any authentication and the user can browse the website to his or her heart's content.
+
+This is made possible by using iptables, DNS redirection and a lot of Apache2 config rules.
+## Deliverable G-02
+Not done.
+## Deliverable G-03
+When the user navigates to the store, they can select articles and order them. It's that easy.
+This is done by using a repository to interface with the back-end Database (MariaDB). Mainly Java was used to create the logic behind this.
+## Deliverable G-04
+Users can enjoy a wide selection of media entertainment. There is an RSS feed, customized to fit the website's theme, where people can read news from nu.nl.
+Also, a Music page with a custom built Playlist and 6 most popular categories. All fully functional.
+*There is a video page, where users can watch Movies.*
+*Audiobooks for those who enjoy it.*
+This is made possible by a mixture of Java, JavaScript, jQuery, Python and Bash on the back-end and of course, MariaDB. For details, check the source files and below technical documentation.
+## Deliverable G-05
+*By using a HTML5 custom player, MediaElement, users are able to choose from a selection of subtitles, as long as they are declared in the database.*
+## Deliverable G-06
+*Six games are implemented and are able to be played by navigating to the Games page through the menu.One home-made game was built and the rest was open-source and unlicensed. These have all been implemented in their own way.*
+## Deliverable G-07
+By 'Getting' a voucher through the Voucher page, users can Redeem that very same voucher to receive internet access. A cost of $10 per hour will be shown to the user.
+
+A Python script has been used for this and continually runs on the Raspberry Pi. It functions as a REST API and responds to calls from the servlet.
+This also monitors when time has run out, or which people still have internet access, for example when the Pi resets or crashes.
+## Deliverable G-08
+To realize this, cookies have been implemented to track the users' state. Also, in other programs, like the Voucher system, people will regain internet access after a reset.
+## Deliverable G-09
+A button has been placed on the Raspberry Pi to allow for easy access to a reset. Cabin crew can press the button, system restarts, nothing has to be done further.
+## Deliverable G-10
+The same goes for this. A button stops WiFi. A btton starts WiFi. Nothing needs to be done further.
+## Deliverable G-11
+Cabin crew can insert a USB-Stick with media content on it, and it will automatically be added to the Web Application without any interaction.
+As documented in below technical documentation, this is made possible with a Python and Bash script that copy and write to the database.
+## Deliverable G-12
+
+## Deliverable G-13
+The voucher system works as intended. See Deliverable G-07.
