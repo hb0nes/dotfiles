@@ -35,18 +35,15 @@ function firstTime() {
     echo "Done copying files to your home ($HOME)."
 
     # Dependencies
-    sudo yum install -y ruby ruby-rdoc ruby-devel lua lua-devel luajit \
-        luajit-devel ctags git python python-devel \
-        python3 python3-devel tcl-devel \
-        perl perl-devel perl-ExtUtils-ParseXS \
-        perl-ExtUtils-XSpp perl-ExtUtils-CBuilder \
-        perl-ExtUtils-Embed gcc g++ make automake autoconf \
-        curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel sqlite-devel
+    sudo yum update
+    sudo yum install -y yum-utils
+    sudo yum groupinstall -y development
+    sudo yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+    sudo yum install -y ruby ruby-devel lua lua-devel luajit ctags git python python-devel tcl-devel perl-devel perl-ExtUtils-ParseXS perl-ExtUtils-CBuilder gcc cmake make automake autoconf openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel sqlite-devel 
+
     #Install tmux, tmuxinator, zsh, vim80 with youcompleteme plugin
     if [[ ! -f /usr/bin/tmux || $force == 'force' ]]; then
-        yum install ncurses-devel
-        yum install glibc-static
-        yum install libevent-devel
+        sudo yum install -y ncurses-devel glibc-static libevent-devel
         git clone https://github.com/tmux/tmux.git
         cd tmux
         sh autogen.sh
@@ -61,8 +58,9 @@ function firstTime() {
     else
         echo "Already have Tmuxinator installed."
     fi
-    if [[ ! -f /bin/zsh5 || $force == 'force' ]]; then
-        sudo yum -y install zsh
+    if [[ ! -f /bin/zsh || $force == 'force' ]]; then
+        sudo yum install -y zsh
+        echo "zsh" >> $HOME/.bashrc
     else
         echo "Already have ZSH installed."
     fi
@@ -127,13 +125,16 @@ function upload() {
 
 function installVim() {
     # install dependencies
-    PYTHONCONFIGDIR=$(ls /usr/lib/python3.5/ | grep -i config | grep -v ".py")
-    echo "Python 3.5 config dir: ${PYTHONCONFIGDIR}"
-    #Make Python 3.5 Default:
+    PYTHONCONFIGDIR=$(ls /usr/lib64/python2.7/ | grep -i config | grep -v ".py")
+    echo "Python 2.7 config dir: ${PYTHONCONFIGDIR}"
+    #Make Python 2.7 Default:
     sudo rm /usr/bin/python
-    sudo ln -s /usr/bin/python3.5 /usr/bin/python
+    sudo ln -s /usr/bin/python2.7 /usr/bin/python
+
     #Delete current vim
-    #sudo yum erase vim vim-runtime gvim
+    sudo yum erase vim vim-runtime gvim
+    sudo rm -rf /usr/local/share/vim /usr/local/bin/vim /usr/bin/vim
+
     #Clone vim repo, configure and make
     cd $HOME
     sudo rm -rf vim
@@ -141,21 +142,17 @@ function installVim() {
     cd vim
     sudo ./configure --with-features=huge \
         --enable-multibyte \
-        --enable-rubyinterp=yes \
-        --enable-python3interp=yes \
-        --with-python3-config-dir=$PYTHONCONFIGDIR
-    --enable-perlinterp=yes \
-        --enable-luainterp=yes \
+        --enable-pythoninterp=yes \
+        --with-python-config-dir=$PYTHONCONFIGDIR
         --enable-gui=gtk2 \
         --enable-cscope \
         --prefix=/usr/local
-    make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
+    make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
     #Install that shit
     sudo make install
     # Cleanup
     sudo rm -rf $HOME/vim
     # make sure ZSH starts even on Win10 WSL
-    echo "zsh" >> $HOME/.bashrc
     echo "All done!"
 }
 
