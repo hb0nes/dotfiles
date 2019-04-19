@@ -14,11 +14,10 @@ fi
 function mux()
 {
     COMMAND=""
-    [[ "$1" = stop ]] && COMMAND="tmuxinator stop home"
-    [[ -z "$1" ]] && COMMAND="tmuxinator start home"
+    [[ "$1" = stop ]] && COMMAND="tmuxinator stop work"
+    [[ -z "$1" ]] && COMMAND="tmuxinator start work"
     eval $COMMAND
     [[ ! -z "$1" && ! "$1" = stop ]] && echo "Usage: $0 [stop]"
 }
 
 export PATH=$PATH:~/scripts
-

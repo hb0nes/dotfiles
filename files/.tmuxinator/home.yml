@@ -1,4 +1,4 @@
-name: work 
+name: home 
 root: ~/
 
 # Optional tmux socket
@@ -43,10 +43,18 @@ windows:
   - main:
       layout: b19c,254x68,0,0[254x51,0,0{127x51,0,0,0,126x51,128,0,5},254x16,0,52{127x16,0,52,6,126x16,128,52,7}]
       panes:
-        - clear 
-        - clear 
-        - clear 
-        - clear 
+        - zsh:
+            - zsh 
+            - clear
+        - zsh:
+            - zsh 
+            - clear
+        - zsh:
+            - zsh 
+            - clear
+        - zsh:
+            - zsh 
+            - clear
   - bash:
       layout: even-vertical
       panes:

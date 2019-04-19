@@ -1,13 +1,13 @@
 set nocompatible              " be iMproved, required
-filetype off
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Chiel92/vim-autoformat'
+Plugin 'VundleVim/Vundle.vim'
 call vundle#end()            " required
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 
 syntax enable
 colorscheme molokai
