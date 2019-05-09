@@ -1,6 +1,6 @@
 .zshrc
 .bashrc
-.tmux.config
+.tmux.conf
 .tmuxinator
 .bin
 .oh-my-zsh

@@ -13,7 +13,8 @@ syntax enable
 colorscheme molokai
 set t_Co=256
 set t_ut=
-filetype plugin indent on
+"filetype plugin indent on
+filetype plugin on
 set tabstop=4
 set shiftwidth=4
 set expandtab

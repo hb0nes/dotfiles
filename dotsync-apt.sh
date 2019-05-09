@@ -118,12 +118,8 @@ function upload() {
 
 function installVim() {
     # install dependencies
-    PYTHONCONFIGDIR=$(find /usr/lib/python3.7 -maxdepth 1 -type d -iname "*config*")
-    echo "Python 3.7 config dir: ${PYTHONCONFIGDIR}"
-    #Make Python 3.7 Default:
-    sudo rm /usr/bin/python
-    sudo ln -s /usr/bin/python3.7 /usr/bin/python
-    #Delete current vim
+    PYTHONCONFIGDIR=$(find /usr/lib64 /usr/lib -iname "config-*" -type d)
+    echo "Python config dir: ${PYTHONCONFIGDIR}"
     #Clone vim repo, configure and make
     cd $HOME
     sudo rm -rf vim
