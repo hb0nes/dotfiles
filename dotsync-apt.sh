@@ -1,5 +1,6 @@
-#!/bin/bash
+#!/bin/bash -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/files"
+
 function usage() {
     echo "Usage: $0 [-h --help] [-d --download] [-u --upload] [-f --first-time <force>] [-t --test] 1>&2"
     exit 1
@@ -31,9 +32,9 @@ function firstTime() {
     homeBackupDir=home_${date}
     mkdir -p ${DIR}/backup/{$rootBackupDir,$homeBackupDir}
     for file in $(cat $DIR/../filelist); do
-     	sudo cp ${HOME}/${file} ${DIR}/backup/${homeBackupDir}
-	    sudo cp /root/${file} ${DIR}/backup/${rootBackupDir}
-        sudo cp -avr $DIR/$file $HOME
+     	cp -avr ${HOME}/${file} ${DIR}/backup/${homeBackupDir}
+	    sudo cp -avr /root/${file} ${DIR}/backup/${rootBackupDir}
+        cp -avr $DIR/$file $HOME
         sudo cp -avr $DIR/$file /root/
     done
     echo "Done copying files to your home ($HOME)."
@@ -42,7 +43,7 @@ function firstTime() {
     sudo apt update
     sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
         libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-        libcairo2-dev libx11-dev libxpm-dev libxt-dev python3.7-dev \
+        libcairo2-dev libx11-dev libxpm-dev libxt-dev python3.7-dev python-dev \
         ruby-dev lua5.1 lua5.1-dev libperl-dev checkinstall build-essential cmake --fix-missing > /dev/null
 
     #Install tmux, tmuxinator, zsh, vim80 with youcompleteme plugin
@@ -143,6 +144,7 @@ function installVim() {
     sudo rm -rf $HOME/vim
     # make sure ZSH starts even on Win10 WSL
     # Install Vundle
+    cd
     sudo git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     sudo git clone https://github.com/VundleVim/Vundle.vim.git /root/.vim/bundle/Vundle.vim
     vim +PluginInstall +qall
