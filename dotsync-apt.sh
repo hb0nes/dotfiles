@@ -109,11 +109,11 @@ function upload() {
         fi
     done
     echo "Copied all dotfiles to $DIR. Now let's commit and push."
-    sudo git add -A
+    git add -A
     echo "Added."
-    sudo git commit -a --allow-empty-message -m '' > /dev/null #2>&1
+    git commit -a --allow-empty-message -m '' > /dev/null #2>&1
     echo "Committed."
-    sudo git push > /dev/null #2>&1
+    git push > /dev/null #2>&1
     echo "Pushed."
 }
 
