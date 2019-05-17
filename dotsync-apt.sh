@@ -32,8 +32,8 @@ function firstTime() {
     homeBackupDir=home_${date}
     mkdir -p ${DIR}/backup/{$rootBackupDir,$homeBackupDir}
     for file in $(cat $DIR/../filelist); do
-     	cp -avr ${HOME}/${file} ${DIR}/backup/${homeBackupDir}
-	    sudo cp -avr /root/${file} ${DIR}/backup/${rootBackupDir}
+     	[[ -e "${HOME}/${file}" ]] && cp -avr ${HOME}/${file} ${DIR}/backup/${homeBackupDir}
+	[[ -e "/root/${file}" ]] && sudo cp -avr /root/${file} ${DIR}/backup/${rootBackupDir}
         cp -avr $DIR/$file $HOME
         sudo cp -avr $DIR/$file /root/
     done
@@ -67,6 +67,11 @@ function firstTime() {
     else
         echo "Already have ViM81 installed."
     fi
+    #if [[ ! -d "${HOME}/.vim/bundle/Vundle.vim" || $force == 'force' ]]; then
+        installVundle
+    #else
+        #echo "Already have Vundle installed."
+    #fi
     echo "All done! Please restart your terminal."
 }
 
@@ -119,7 +124,7 @@ function upload() {
 
 function installVim() {
     # install dependencies
-    PYTHONCONFIGDIR=$(find /usr/lib64 /usr/lib -iname "config-*" -type d)
+    PYTHONCONFIGDIR=$(find /usr/lib64 /usr/lib -path "*python*config-*" -type d | head -1)
     echo "Python config dir: ${PYTHONCONFIGDIR}"
     #Clone vim repo, configure and make
     cd $HOME
@@ -130,8 +135,8 @@ function installVim() {
         --enable-multibyte \
         --enable-rubyinterp=yes \
         --enable-python3interp=yes \
-        --with-python3-config-dir=$PYTHONCONFIGDIR
-    --enable-perlinterp=yes \
+        --with-python3-config-dir=$PYTHONCONFIGDIR \
+        --enable-perlinterp=yes \
         --enable-luainterp=yes \
         --enable-gui=gtk2 \
         --enable-cscope \
@@ -142,17 +147,19 @@ function installVim() {
     echo -e "\n\n\n\n\n" | sudo checkinstall
     # Cleanup
     sudo rm -rf $HOME/vim
-    # make sure ZSH starts even on Win10 WSL
+    echo "All done!"
+}
+
+installVundle(){
+    tgtDir=.vim/bundle/Vundle.vim
+
     # Install Vundle
-    cd
-    sudo git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    sudo git clone https://github.com/VundleVim/Vundle.vim.git /root/.vim/bundle/Vundle.vim
+    [[ ! -d ~/$tgtDir ]] && git clone https://github.com/VundleVim/Vundle.vim.git ~/$tgtDir
     vim +PluginInstall +qall
+    sudo test ! -d /root/$tgtDir  && sudo git clone https://github.com/VundleVim/Vundle.vim.git /root/$tgtDir
     sudo su -c "vim +PluginInstall +qall"
-    #Make YouCompleteMe with Python3.7
     $HOME/.vim/bundle/YouCompleteMe/install.py --clang-completer
     sudo /root/.vim/bundle/YouCompleteMe/install.py --clang-completer
-    echo "All done!"
 }
 
 if [[ $# == 0 ]]; then usage; fi
