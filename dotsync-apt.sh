@@ -158,8 +158,8 @@ installVundle(){
     vim +PluginInstall +qall
     sudo test ! -d /root/$tgtDir  && sudo git clone https://github.com/VundleVim/Vundle.vim.git /root/$tgtDir
     sudo su -c "vim +PluginInstall +qall"
-    $HOME/.vim/bundle/YouCompleteMe/install.py --clang-completer
-    sudo /root/.vim/bundle/YouCompleteMe/install.py --clang-completer
+    python3 $HOME/.vim/bundle/YouCompleteMe/install.py --clang-completer
+    sudo python3 /root/.vim/bundle/YouCompleteMe/install.py --clang-completer
 }
 
 if [[ $# == 0 ]]; then usage; fi
