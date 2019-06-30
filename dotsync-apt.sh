@@ -2,7 +2,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/files"
 
 function usage() {
-    echo "Usage: $0 [-h --help] [-d --download] [-u --upload] [-f --first-time <force>] [-t --test] 1>&2"
+    echo "Usage: ${0} [-h --help] [-d --download] [-u --upload] [-f --first-time <force>] [-t --test]" 1>&2
     exit 1
 }
 
@@ -16,11 +16,11 @@ function help() {
 
 function testRun() {
     echo $@
-    echo $DIR
+    echo ${DIR}
 }
 
 function firstTime() {
-    if [[ $force == "force" ]]; then
+    if [[ ${force} == "force" ]]; then
         echo 'Forced install.'
     fi
 
@@ -30,14 +30,14 @@ function firstTime() {
     date=$(date +%F_%T)
     rootBackupDir=root_${date}
     homeBackupDir=home_${date}
-    mkdir -p ${DIR}/backup/{$rootBackupDir,$homeBackupDir}
-    for file in $(cat $DIR/../filelist); do
+    mkdir -p ${DIR}/backup/{${rootBackupDir},${homeBackupDir}}
+    for file in $(cat ${DIR}/../filelist); do
      	[[ -e "${HOME}/${file}" ]] && cp -avr ${HOME}/${file} ${DIR}/backup/${homeBackupDir}
 	[[ -e "/root/${file}" ]] && sudo cp -avr /root/${file} ${DIR}/backup/${rootBackupDir}
-        cp -avr $DIR/$file $HOME
-        sudo cp -avr $DIR/$file /root/
+        cp -avr ${DIR}/${file} ${HOME}
+        sudo cp -avr ${DIR}/${file} /root/
     done
-    echo "Done copying files to your home ($HOME)."
+    echo "Done copying files to your home (${HOME})."
 
     # Dependencies
     sudo apt update
@@ -47,31 +47,31 @@ function firstTime() {
         ruby-dev lua5.1 lua5.1-dev libperl-dev checkinstall build-essential cmake --fix-missing > /dev/null
 
     #Install tmux, tmuxinator, zsh, vim80 with youcompleteme plugin
-    if [[ ! -f /usr/bin/tmux || $force == 'force' ]]; then
+    if [[ ! -f /usr/bin/tmux || ${force} == 'force' ]]; then
         sudo apt-get install -y tmux > /dev/null
     else
         echo "Already have tmux installed."
     fi
-    if [[ ! -f /usr/local/bin/tmuxinator || $force == 'force' ]]; then
+    if [[ ! -f /usr/local/bin/tmuxinator || ${force} == 'force' ]]; then
         sudo gem install tmuxinator
     else
         echo "Already have Tmuxinator installed."
     fi
-    if [[ ! -f /bin/zsh5 || $force == 'force' ]]; then
+    if [[ ! -f /bin/zsh5 || ${force} == 'force' ]]; then
         sudo apt-get install -y zsh > /dev/null
     else
         echo "Already have ZSH installed."
     fi
-    if [[ ! -d /usr/local/share/vim/vim81 || $force == 'force' ]]; then
+    if [[ ! -d /usr/local/share/vim/vim81 || ${force} == 'force' ]]; then
         installVim
     else
         echo "Already have ViM81 installed."
     fi
-    #if [[ ! -d "${HOME}/.vim/bundle/Vundle.vim" || $force == 'force' ]]; then
+    if [[ ! -d "${HOME}/.vim/bundle/Vundle.vim" || ${force} == 'force' ]]; then
         installVundle
-    #else
-        #echo "Already have Vundle installed."
-    #fi
+    else
+        echo "Already have Vundle installed."
+    fi
     echo "All done! Please restart your terminal."
 }
 
@@ -83,15 +83,15 @@ function download() {
     read -p "Pull all dotfiles?" -n 1 ans
     echo
     for file in $(cat filelist); do
-        if [[ $ans =~ ^[YyJj]$ ]]; then
-            cp -r $DIR/$file $HOME
-            sudo cp -r $DIR/$file /root/
-            echo "Copied $DIR/$file to home ($HOME)"
+        if [[ ${ans} =~ ^[YyJj]$ ]]; then
+            cp -r ${DIR}/${file} ${HOME}
+            sudo cp -r ${DIR}/${file} /root/
+            echo "Copied ${DIR}/${file} to home (${HOME})"
         else
-            read -p "Pull $DIR/$file?" -n 1 -r
+            read -p "Pull ${DIR}/${file}?" -n 1 -r
             echo
-            if [[ $REPLY =~ ^[YyJj]$ ]]; then
-                sudo cp -r $DIR/$file $HOME
+            if [[ ${REPLY} =~ ^[YyJj]$ ]]; then
+                sudo cp -r ${DIR}/${file} ${HOME}
             fi
         fi
     done
@@ -102,18 +102,18 @@ function upload() {
     read -p "Push all dotfiles?" -n 1 ans
     echo
     for file in $(cat filelist); do
-        if [[ $ans =~ ^[YyJj]$ ]]; then
-            sudo cp -avr $HOME/$file $DIR
-            #echo "Copied $file to $DIR"
+        if [[ ${ans} =~ ^[YyJj]$ ]]; then
+            sudo cp -avr ${HOME}/${file} ${DIR}
+            #echo "Copied ${file} to ${DIR}"
         else
-            read -p "Push $HOME/$file?" -n 1 -r
+            read -p "Push ${HOME}/${file}?" -n 1 -r
             echo
-            if [[ $REPLY =~ ^[YyJj]$ ]]; then
-                sudo cp -avr $HOME/$file $DIR
+            if [[ ${REPLY} =~ ^[YyJj]$ ]]; then
+                sudo cp -avr ${HOME}/${file} ${DIR}
             fi
         fi
     done
-    echo "Copied all dotfiles to $DIR. Now let's commit and push."
+    echo "Copied all dotfiles to ${DIR}. Now let's commit and push."
     git add -A
     echo "Added."
     git commit -a --allow-empty-message -m '' > /dev/null #2>&1
@@ -127,7 +127,7 @@ function installVim() {
     PYTHONCONFIGDIR=$(find /usr/lib64 /usr/lib -path "*python*config-*" -type d | head -1)
     echo "Python config dir: ${PYTHONCONFIGDIR}"
     #Clone vim repo, configure and make
-    cd $HOME
+    cd ${HOME}
     sudo rm -rf vim
     git clone https://github.com/vim/vim.git
     cd vim
@@ -135,7 +135,7 @@ function installVim() {
         --enable-multibyte \
         --enable-rubyinterp=yes \
         --enable-python3interp=yes \
-        --with-python3-config-dir=$PYTHONCONFIGDIR \
+        --with-python3-config-dir=${PYTHONCONFIGDIR} \
         --enable-perlinterp=yes \
         --enable-luainterp=yes \
         --enable-gui=gtk2 \
@@ -146,26 +146,25 @@ function installVim() {
     sudo apt remove -y vim vim-runtime gvim
     echo -e "\n\n\n\n\n" | sudo checkinstall
     # Cleanup
-    sudo rm -rf $HOME/vim
+    sudo rm -rf ${HOME}/vim
     echo "All done!"
 }
 
 installVundle(){
     tgtDir=.vim/bundle/Vundle.vim
-
     # Install Vundle
-    [[ ! -d ~/$tgtDir ]] && git clone https://github.com/VundleVim/Vundle.vim.git ~/$tgtDir
+    [[ ! -d ~/${tgtDir} ]] && git clone https://github.com/VundleVim/Vundle.vim.git ~/${tgtDir}
     vim +PluginInstall +qall
-    sudo test ! -d /root/$tgtDir  && sudo git clone https://github.com/VundleVim/Vundle.vim.git /root/$tgtDir
+    sudo test ! -d ~root/${tgtDir}  && sudo git clone https://github.com/VundleVim/Vundle.vim.git ~root/${tgtDir}
     sudo su -c "vim +PluginInstall +qall"
-    python3 $HOME/.vim/bundle/YouCompleteMe/install.py --clang-completer
+    python3 ${HOME}/.vim/bundle/YouCompleteMe/install.py --clang-completer
     sudo python3 /root/.vim/bundle/YouCompleteMe/install.py --clang-completer
 }
 
 if [[ $# == 0 ]]; then usage; fi
 while [[ $# > 0 ]]; do
-    key=$1
-    case $key in
+    key=${1}
+    case ${key} in
         -d|--download)
             download
             shift # key
@@ -175,8 +174,8 @@ while [[ $# > 0 ]]; do
             shift # key
             ;;
         -f|--first-time)
-            force=$2
-            firstTime $force
+            force=${2}
+            firstTime ${force}
             shift # key
             shift # value
             ;;
