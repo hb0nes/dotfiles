@@ -151,9 +151,10 @@ function installVim() {
 }
 
 installVundle(){
+    echo "Current directory: `pwd`"
     tgtDir=.vim/bundle/Vundle.vim
     # Install Vundle
-    [[ ! -d ~/${tgtDir} ]] && git clone https://github.com/VundleVim/Vundle.vim.git ~/${tgtDir}
+    [[ ! -d ~/${tgtDir} ]] && git clone https://github.com/VundleVim/Vundle.vim.git ${HOME}/${tgtDir}
     vim +PluginInstall +qall
     sudo test ! -d ~root/${tgtDir}  && sudo git clone https://github.com/VundleVim/Vundle.vim.git ~root/${tgtDir}
     sudo su -c "vim +PluginInstall +qall"

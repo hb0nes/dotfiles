@@ -96,15 +96,18 @@ source $ZSH/oh-my-zsh.sh
 #source ~/.bin/tmuxinator.zsh
 export TERM=xterm-256color
 export EDITOR="vim"
-eval $(dircolors -b $HOME/.dircolors)
+export PATH=${HOME}/scripts:${PATH}
+stty -ixon # forward search ctrl + s
 
-function mux()                                                                                                                                                                                              
-{                                                                                                                                                                                                           
-    COMMAND=""                                                                                                                                                                                              
-    [[ "$1" = stop ]] && COMMAND="tmuxinator stop home"                                                                                                                                                     
-    [[ -z "$1" ]] && COMMAND="tmuxinator start home"                                                                                                                                                        
-    eval $COMMAND                                                                                                                                                                                           
-    [[ ! -z "$1" && ! "$1" = stop ]] && echo "Usage: $0 [stop]"                                                                                                                                             
-}                                                                                                                                                                                                           
+eval $(dircolors -b ${HOME}/.dircolors)
+
+function mux()
+{
+    COMMAND=""
+    [[ "$1" = stop ]] && COMMAND="tmuxinator stop home"
+    [[ -z "$1" ]] && COMMAND="tmuxinator start home"
+    eval ${COMMAND}
+    [[ ! -z "$1" && ! "$1" = stop ]] && echo "Usage: $0 [stop]"
+}
 
 
