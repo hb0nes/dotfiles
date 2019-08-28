@@ -20,6 +20,5 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 cmap w!! w !sudo tee > /dev/null %
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+set clipboard=unnamed
 
