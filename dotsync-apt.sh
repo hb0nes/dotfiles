@@ -140,6 +140,8 @@ function installVim() {
         --enable-luainterp=yes \
         --enable-gui=gtk2 \
         --enable-cscope \
+        --with-x \
+        --with-features=huge \
         --prefix=/usr/local
     make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
     #Install that shit
