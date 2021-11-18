@@ -1,0 +1,140 @@
+name: home
+#root: ~
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Project hooks
+# Runs on project start, always
+# on_project_start: command
+# Run on project start, the first time
+# on_project_first_start: command
+# Run on project start, after the first time
+# on_project_restart: command
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+# Run on project stop
+# on_project_stop: command
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+#pre_window: zsh
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+#tmux_options: -f ~/.tmux.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+#startup_window: editor
+
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t default
+
+windows:
+  - work:
+      layout: 902b,204x55,0,0[204x36,0,0{102x36,0,0,0,101x36,103,0,3},204x18,0,37{102x18,0,37,4,101x18,103,37[101x15,103,37,5,101x2,103,53,6]}]
+      panes:
+        - - cd Work
+          - ssh-add
+        - - cd Work
+          - clear
+        - - cd Work
+          - clear
+        - - cd Work
+          - clear
+        - vpn
+
+  - ld4-staging:
+      layout: tiled
+      panes:
+        - - wait_for_ssh ld4-lbl-01-stg
+          - clear
+        - - wait_for_ssh ld4-lbl-02-stg
+          - clear
+        - - wait_for_ssh ld4-ret-01-stg
+          - clear
+        - - wait_for_ssh ld4-mas-01-stg
+          - clear
+
+  - ld4-development:
+      layout: tiled
+      panes:
+        - - wait_for_ssh ld4-lbl-01-dev
+          - clear
+        - - wait_for_ssh ld4-ret-01-dev
+          - clear
+        - - wait_for_ssh ld4-hft-01-dev
+          - clear
+        - - wait_for_ssh ld4-mas-01-dev
+          - clear
+
+  - ld4-production:
+      layout: 7354,191x49,0,0[191x16,0,0{93x16,0,0,3,97x16,94,0,20},191x23,0,17{93x23,0,17[93x11,0,17,22,93x11,0,29,38],97x23,94,17[97x11,94,17,23,97x11,94,29,37]},191x8,0,41{93x8,0,41,25,97x8,94,41,26}]
+      panes:
+        - - wait_for_ssh ld4-lbl-01
+          - clear
+        - - wait_for_ssh ld4-lbl-02
+          - clear
+        - - wait_for_ssh ld4-ret-01
+          - clear
+        - - wait_for_ssh ld4-ret-02
+          - clear
+        - - wait_for_ssh ld4-ret-03
+          - clear
+        - - wait_for_ssh ld4-hyb-01
+          - clear
+        - - wait_for_ssh ld4-hft-01
+          - clear
+        - - wait_for_ssh ld4-mas-01
+          - clear
+
+  - ld4-misc:
+      layout: tiled
+      panes:
+        - wait_for_ssh ld4-git-01
+        - wait_for_ssh ld4-pup-01
+        - wait_for_ssh ld4-mon-01
+  - zh4-production:
+      layout: tiled
+      panes:
+        - - wait_for_ssh zh4-lbl-01
+          - clear
+        - - wait_for_ssh zh4-lbl-02
+          - clear
+        - - wait_for_ssh zh4-mas-01
+          - clear
+        - - wait_for_ssh zh4-ret-01
+          - clear
+        - - wait_for_ssh zh4-ret-02
+          - clear
+        - - wait_for_ssh zh4-hft-01
+          - clear
+  - history-production:
+      layout: tiled
+      panes:
+        - - wait_for_ssh ld4-his-01
+          - clear
+        - - wait_for_ssh ld4-his-02
+          - clear
+        - - wait_for_ssh ld4-his-03
+          - clear
+  - personal:
+      layout: tiled
+      panes:
+        - - cd Personal
+          - clear
+        - - cd Personal
+          - clear
+        - - cd Personal
+          - clear
+        - - cd Personal
+          - clear
