@@ -51,7 +51,10 @@ local plugins = {
   },
   {
     'dracula/vim',
-    name = 'dracula'
+    name = 'dracula',
+    config = function()
+      vim.cmd('colorscheme dracula')
+    end,
   },
   {
     'neovim/nvim-lspconfig',
@@ -157,7 +160,6 @@ vim.keymap.set('n', '<C-A-k>', '<C-w>k')
 vim.keymap.set('n', '<C-A-h>', '<C-w>h')
 
 -- Eye candy
-vim.cmd('colorscheme dracula')
 vim.opt.termguicolors = true
 
 -- Transparency support
