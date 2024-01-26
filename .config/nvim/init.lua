@@ -126,8 +126,14 @@ local plugins = {
   		},
   	},
   	config = function()
+      -- Close Outline when leaving buffer
+      vim.api.nvim_create_autocmd({"QuitPre"}, {
+        pattern = {"*"},
+        command = "OutlineClose",
+      })
+      -- Load outline settings
   		require("plugins.outline")
-  	end,
+  	end
   },
   {
   	"nvim-tree/nvim-tree.lua",
