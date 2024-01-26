@@ -1,5 +1,5 @@
-name: work 
-root: ~/
+name: work
+#root: ~
 
 # Optional tmux socket
 # socket_name: foo
@@ -40,32 +40,80 @@ root: ~/
 # post: tmux -CC attach -t default
 
 windows:
-  - main:
-      layout: b19c,254x68,0,0[254x51,0,0{127x51,0,0,0,126x51,128,0,5},254x16,0,52{127x16,0,52,6,126x16,128,52,7}]
+  - work:
+      layout: f8e8,315x75,0,0[315x46,0,0{158x46,0,0,0,156x46,159,0,8},315x28,0,47{158x28,0,47,9,156x28,159,47[156x21,159,47,10,156x3,159,69,37,156x2,159,73,11]}]
       panes:
-        - clear 
-        - clear 
-        - clear 
-        - clear 
-  - bash:
-      layout: even-vertical
-      panes:
-        - bash:
-            - clear
-        - bash2:
-            - clear
-  - build:
+        - - cd Work
+        - - cd Work
+        - - cd Work
+        - - cd Work
+        -
+        - caffeinate
+
+  - ld4-new-setup:
       layout: tiled
       panes:
-        - one:
-            - clear
-        - two: 
-            - clear
-        - three:
-            - clear
-        - four:
-            - clear
-  - development:
-      panes:
-        - 
+        - wait_for_ssh ld4-lbl-01
+        - wait_for_ssh ld4-lbl-02
+        - wait_for_ssh ld4-ret-01
+        - wait_for_ssh ld4-ret-02
+        - wait_for_ssh ld4-ret-03
+        - wait_for_ssh ld4-ret-04
+        - wait_for_ssh ld4-hft-01
+        - wait_for_ssh ld4-hyb-01
+        - wait_for_ssh ld4-mas-01
+        - wait_for_ssh ld4-mas-02
 
+  - ld4-misc:
+      layout: tiled
+      panes:
+        - wait_for_ssh ld4-git-01
+        - wait_for_ssh ld4-pup-01
+        - wait_for_ssh ld4-mon-01
+        - wait_for_ssh ld4-nas-01
+        - wait_for_ssh ld4-sys-01
+        - wait_for_ssh ld4-sys-02
+
+  - zh4-prod:
+      layout: tiled
+      panes:
+        - wait_for_ssh zh4-lbl-01
+        - wait_for_ssh zh4-lbl-02
+        - wait_for_ssh zh4-mas-01
+        - wait_for_ssh zh4-ret-01
+        - wait_for_ssh zh4-ret-02
+        - wait_for_ssh zh4-hft-01
+
+
+  - ld4-dev:
+      layout: tiled
+      panes:
+        - wait_for_ssh ld4-lbl-01-dev
+        - wait_for_ssh ld4-ret-01-dev
+        - wait_for_ssh ld4-hft-01-dev
+        - wait_for_ssh ld4-mas-01-dev
+
+  - history:
+      layout: tiled
+      panes:
+        - wait_for_ssh ld4-his-01
+        - wait_for_ssh ld4-his-02
+        - wait_for_ssh ld4-his-03
+  - history-lbl:
+      layout: tiled
+      panes:
+        - wait_for_ssh ld4-hlb-01
+        - wait_for_ssh ld4-hlb-02
+  - history-dev:
+      layout: tiled
+      panes:
+        - wait_for_ssh ld4-his-01-dev
+        - wait_for_ssh ld4-his-02-dev
+        - wait_for_ssh ld4-his-03-dev
+  - stream:
+      layout: tiled
+      panes:
+        - wait_for_ssh ld4-str-01
+        - wait_for_ssh ld4-str-02
+        - wait_for_ssh ld4-str-03
+        - wait_for_ssh ld4-str-04

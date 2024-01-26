@@ -1,27 +1,32 @@
-# Plugins
-#eval "$(starship init zsh)"
-source ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme
-source ~/.config/zsh/.purepower
-source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^ ' autosuggest-accept # ctrl space for autocomplete
-source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export GIT_SSH_COMMAND="/usr/bin/ssh"
 
-# Tab menu completion
+export TELEPORT_LOGIN=root
+
+#conda init "$(basename "${SHELL}")" >/dev/null
+## Plugins
+eval "$(starship init zsh)"
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+export EDITOR=vim
+export VISUAL=vim
+
+### Tab menu completion
+fpath=(~/.zsh $fpath)
 autoload -U compinit
+compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' 'r:|?=** m:{a-z\-}={A-Z\_}'
 zmodload zsh/complist
-compinit
-# Include hidden files in autocomplete:
+## Include hidden files in autocomplete:
 _comp_options+=(globdots)
 setopt extendedglob
 setopt GLOB_DOTS
-
-# use the vi navigation keys in menu completion
+# Path
+bindkey -e
+bindkey '^ ' autosuggest-accept # ctrl space for autocomplete
 bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history bindkey -M menuselect 'l' vi-forward-char bindkey -M menuselect 'j' vi-down-line-or-history
 
 # Don't jump too much when using alt B and alt F
 export WORDCHARS="*?_[]|~=&!#$%^(){}<>"
@@ -48,16 +53,17 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 
-# Path
-export PATH="/home/b0nes/.local/bin:/opt/terraform:/home/b0nes/Personal/scripts:/home/b0nes/Work/terraform:${PATH}:/home/b0nes/go/bin"
-export PATH=$PATH:/usr/local/go/bin
-export EDITOR=nvim
-export VISUAL=nvim
 
 # Aliases
+PATH="/Users/b0nes/Downloads/nvim-macos/bin:${PATH}"
+PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+PATH="/opt/tanzu-cli:${PATH}"
+PATH="/usr/local/bin:/opt/puppetlabs/bolt/bin:/opt/puppetlabs/pdk/share/cache/ruby/2.7.0/gems/puppet-lint-2.5.2/bin:/opt/homebrew/Cellar/tmuxinator/3.0.5/libexec/gems/tmuxinator-3.0.5/bin/tmuxinator:/Users/b0nes/Work/code/puppet-editor-services:/Users/b0nes/Personal/scripts:/Users/b0nes/Work/code/system-tools:/opt/homebrew/bin:/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 [ -f "$HOME/.config/shortcutrc" ] && source "$HOME/.config/shortcutrc"
+[ -f "$HOME/.config/ssh_alias" ] && source "$HOME/.config/ssh_alias"
 alias \
-    vpn="sudo openfortivpn" \
+    lg="lazygit" \
+    vpn='sudo openfortivpn -c /etc/openfortivpn/config --cookie="$(openfortivpn-saml)" -v' \
     b="bolt command run --targets" \
     r="ranger" \
    	cp="cp -iv" \
@@ -74,7 +80,19 @@ alias \
     sxiv="sxiv -a" \
     m="neomutt" \
     plex="~/Apps/plex" \
-    attr="amount=174545; curl -s -X GET 'https://api.coingecko.com/api/v3/simple/price?ids=attrace&vs_currencies=eur' -H 'accept: application/json' | grep -oP '\d+\.\d+' | awk -v amount=\${amount} '{print \$0 * amount}'"
+    attr="amount=174545; curl -s -X GET 'https://api.coingecko.com/api/v3/simple/price?ids=attrace&vs_currencies=eur' -H 'accept: application/json' | grep -oP '\d+\.\d+' | awk -v amount=\${amount} '{print \$0 * amount}'" \
+    gb="git branch | grep \* | cut -d\  -f2 | sed 's/-/_/g' | tr -d '\n' | tee >(pbcopy)" \
+    gs-="git switch -" \
+    j="jira-terminal" \
+    jlm="jira-terminal list -p SYS -j 'status != Done and status != Rejected' -M" \
+    jl="jira-terminal list -p SYS -j 'status != Done and status != Rejected' | less" \
+    jc="jira-terminal comment -t" \
+    jn="jira-terminal new -M -t Task -P SYS -s" \
+    jt="jira-terminal transition"
+
+# tanzu completion
+source <(tanzu completion zsh)
+compdef _tanzu tanzu
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -87,10 +105,14 @@ export FZF_ALT_C_COMMAND="fd --type d ${FD_OPTIONS}"
 function mux() {
     if [[ "${1}" == "stop" ]]; then
         echo "Stopping tmux."
-        tmuxinator stop home
+        tmuxinator stop work
+    elif [[ "${1}" == "restart" ]]; then
+        echo "Restarting tmux."
+        tmuxinator stop work
+        tmuxinator start work
     else
         echo "Starting tmux."
-        tmuxinator start home
+        tmuxinator start work
     fi
 }
 
@@ -101,14 +123,14 @@ function fzf_grep_edit(){
         return
     fi
     match=$(
-    rg -g "!custom-modules" --no-ignore --color=never --line-number -i --hidden "$1" |
+    rg -g "!custom-modules" --no-ignore --color=never --line-number -i --hidden "$1" | sort -t: -k 1,1 -u |
         fzf --delimiter : \
             --preview "bat --style full --line-range {2}: {1}"
       )
     files=$(cut -d':' -f1 <<< "${match}")
     lineno=$(cut -d':' -f2 <<< "${match}")
     if [[ -n "$files" ]]; then
-        nvim -p +${lineno} $(paste -s -d ' ' <<<$files)
+        vim -p +${lineno} $(paste -s -d ' ' <(echo "${files}"))
     fi
 }
 alias v="fzf_grep_edit"
@@ -116,19 +138,64 @@ alias v="fzf_grep_edit"
 function wait_for_ssh(){
     local host=$1
     while true; do
-        if ping -c1 -w1 "${host}" >/dev/null 2>&1; then
-            ssh-add -l && ssh "${host}"
-        else
-            echo "Host: ${host} unreachable."
-        fi
+        ssh "${host}" || echo "Host: ${host} unreachable."
+        #if ping -c1 -W1 "${host}" >/dev/null 2>&1; then
+            #ssh-add -l && ssh "${host}"
+        #else
+        #fi
         sleep 1
     done
 }
 
 # Git helpers
+alias gdp="git diff production.."
+#zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+compdef _git gbr=git-checkout
+compdef _git gcb=git-checkout
+compdef _git gm=git-checkout
+function gbr() {
+  [[ $1 ]] || { echo "supply branch"; return 1; }
+  : git checkout
+  branchName=$1
+  git push origin -d ${branchName}
+  git branch -d ${branchName}
+}
+alias gbd="gbr"
+
+function gcb() {
+  local branch=$1
+  git checkout    ${branch} &>/dev/null && return 0
+  git checkout -b ${branch} &>/dev/null && return 0
+  return 1
+}
+
+
+# git branch delete merged branches that do not exist remotely
+function gbmd() {
+  local_branches=$(git branch|tr -d ' '|sort)
+  merged_branches=$(git log|grep -oP "(?<=Merge branch ').*?(?=')"|sort)
+  remote_branches=$(git ls-remote -qh|awk -F'/' '{print $NF}'|sort)
+  merged_branches_not_remote=$(comm -23 <(printf "${merged_branches}") <(printf "${remote_branches}"))
+  merged_branches_not_remote_local=$(comm -12 <(printf "${merged_branches_not_remote}") <(printf "${local_branches}"))
+  echo "${merged_branches_not_remote_local}"
+}
+
+function g() {
+ git checkout "$(git branch -a | sed 's|remotes/.*/||' | grep -v HEAD | sort -ru | fzf | tr -d '[:space:]')"
+
+}
+
 function gp() {
   local commitMsg=$1
-  git add -A; git commit -m "${commitMsg}"; git push
+  git add -A; git commit -m "${commitMsg}"; git push -u
+}
+
+function gtp() {
+  local commitMsg=$1
+  last_tag=$(git tag | tail -1 | sed 's|\.||g')
+  incr_tag=$(( last_tag + 1 ))
+  new_tag=$(sed 's|\w|&.|g;s|.$||' <<< $incr_tag)
+  git add .; git commit -m "${commitMsg}"; git tag $new_tag; git push --tags; git push
 }
 
 function gm() {
@@ -160,3 +227,63 @@ function fp() {
 }
 
 alias ds="sudo ncdu -x"
+
+
+flushdns() {
+  sudo dscacheutil -flushcache
+  sudo killall -HUP mDNSResponder
+}
+
+export LC_ALL=en_US.UTF-8
+source $HOME/.cargo/env
+ulimit -n 123123
+source <(kubectl completion zsh)
+export TELEPORT_ADD_KEYS_TO_AGENT=yes
+
+#source /opt/homebrew/opt/spaceship/spaceship.zsh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+PATH="$HOME/.cargo/bin:$PATH"
+
+
+govc () {
+	GOVC_INSECURE=1 GOVC_URL=https://$(op item get vSphere --fields username | sed s/@/%40/):$(op item get vSphere --fields password)@ld4-vct-02.deribit.internal /opt/homebrew/bin/govc $@
+}
+
+govc_login_vm() {
+  vm=$1
+  [[ $vm ]] || return 1
+  username=$(op item get $vm --fields username)
+  password=$(op item get $vm --fields password)
+  govc vm.keystrokes -vm $vm -s $username
+  govc vm.keystrokes -vm $vm -c 0x28
+  govc vm.keystrokes -vm $vm -s $password
+  govc vm.keystrokes -vm $vm -c 0x28
+}
+
+gbp(){
+  echo "puppet agent -tE $(gb) --noop" | tee >(pbcopy)
+}
+
+
+ipmi() {
+  local h=$1; shift;
+  ipmitool -H $h -U ADMIN -P $(op item get $h --fields password) -I lanplus $@
+}
+
+ipmireset() {
+    ipmi $1 power reset
+    ipmi $1 power on
+}
+
+ipmibios() {
+    ipmi $1 chassis bootdev bios
+    ipmi $1 power reset
+    ipmi $1 power on
+    ipmi $1 sol activate
+}
+
+ipmisol() {
+    ipmi $1 sol activate
+}
