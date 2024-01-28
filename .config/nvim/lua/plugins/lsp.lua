@@ -115,27 +115,9 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", bufopts, { desc = "✨lsp hover for docs" }))
 	vim.keymap.set(
 		"n",
-		"gD",
-		vim.lsp.buf.declaration,
-		vim.tbl_extend("force", bufopts, { desc = "✨lsp go to declaration" })
-	)
-	vim.keymap.set(
-		"n",
 		"gd",
 		vim.lsp.buf.definition,
 		vim.tbl_extend("force", bufopts, { desc = "✨lsp go to definition" })
-	)
-	vim.keymap.set(
-		"n",
-		"gt",
-		vim.lsp.buf.type_definition,
-		vim.tbl_extend("force", bufopts, { desc = "✨lsp go to type definition" })
-	)
-	vim.keymap.set(
-		"n",
-		"gi",
-		vim.lsp.buf.implementation,
-		vim.tbl_extend("force", bufopts, { desc = "✨lsp go to implementation" })
 	)
 	vim.keymap.set("n", "rn", function()
 		return ":IncRename " .. vim.fn.expand("<cword>")
