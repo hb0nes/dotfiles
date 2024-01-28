@@ -18,7 +18,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 ---------------
 vim.keymap.set(
 	"n",
-	"d+",
+	"d=",
 	vim.diagnostic.goto_next,
 	vim.tbl_extend("force", opts, { desc = "✨lsp go to next diagnostic" })
 )
@@ -137,7 +137,7 @@ local on_attach = function(client, bufnr)
 	)
 	vim.keymap.set(
 		"n",
-		"<leader>dh",
+		"<leader>h",
 		toggle_inlay_hints,
 		vim.tbl_extend("force", bufopts, { desc = "✨lsp toggle inlay hints" })
 	)

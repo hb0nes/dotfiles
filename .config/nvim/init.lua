@@ -210,6 +210,11 @@ local plugins = {
 			require("better_escape").setup()
 		end,
 	},
+  {
+  "luckasRanarison/clear-action.nvim",
+	  opts = require('plugins.clear_action')
+  },
+  'github/copilot.vim',
 }
 require("lazy").setup(plugins, nil)
 
@@ -234,6 +239,8 @@ vim.o.expandtab = true
 
 -- Save with sudo when typing :w!!
 vim.api.nvim_set_keymap("c", "w!!", "w !sudo tee > /dev/null %", { noremap = true, silent = true })
+-- Save with ctrl or alt s
+vim.keymap.set('n', '<A-s>', ':w<Cr>')
 
 -- Copy to clipboard on yank
 vim.o.clipboard = "unnamed"
