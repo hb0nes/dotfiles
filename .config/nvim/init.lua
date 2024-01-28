@@ -152,12 +152,11 @@ local plugins = {
 			require("plugins.nvim_tree")
 		end,
 	},
-	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 	{
 		"nvim-treesitter/nvim-treesitter",
-		lazy = true,
 		build = ":TSUpdate",
 		dependencies = {
+			{ "nvim-treesitter/nvim-treesitter-textobjects" },
 			{
 				"nvim-treesitter/nvim-treesitter-context",
 				event = "BufReadPre",
@@ -169,20 +168,12 @@ local plugins = {
 						end,
 					},
 				},
-				-- init = function()
-				-- 	local treesitter_hl = vim.api.nvim_create_augroup("TreesitterHighlights", {})
-				-- 	vim.api.nvim_clear_autocmds({ group = treesitter_hl })
-				-- 	vim.api.nvim_create_autocmd("BufEnter", {
-				-- 		group = treesitter_hl,
-				-- 		desc = "redefinition of treesitter context highlights group",
-				-- 		callback = function()
-				-- 			vim.api.nvim_set_hl(0, "TreesitterContext", { link = "Pmenu" })
-				-- 		end,
-				-- 	})
-				-- end,
 				opts = { max_lines = 3 },
 			},
 		},
+		config = function()
+			require("plugins.treesitter")
+		end,
 	},
 	{
 		"Bekaboo/dropbar.nvim",
