@@ -4,11 +4,13 @@ local opts = {
     enable = true,
     combine = false, -- combines all action kinds into a single sign
     priority = 200, -- extmark priority
-    position = "eol", -- "right_align" | "overlay"
+    position = "right_align", -- "right_align" | "overlay"
     separator = " ", -- signs separator
     show_count = true, -- show the number of each action kind
     show_label = false, -- show the string returned by `label_fmt`
-    label_fmt = function(actions) return actions[1].title end, -- actions is an array of `CodeAction`
+    label_fmt = function(actions)
+      return actions[1].title
+    end, -- actions is an array of `CodeAction`
     update_on_insert = false, -- show and update signs in insert mode
     icons = {
       quickfix = "🔧",
@@ -41,8 +43,8 @@ local opts = {
     -- example: "<leader>aq" | { "<leader>aq", "Quickfix" }
     -- Or if you want more control: { key = "<leader>aq", mode = { "n" }, options = { desc = "Quickfix" } }
     -- `options` accepts the same keys as vim.keymap.set()
-    code_action = 'df', -- a modified version of `vim.lsp.buf.code_action`
-    apply_first = 'd1', -- directly applies the first code action
+    code_action = "df", -- a modified version of `vim.lsp.buf.code_action`
+    apply_first = "d1", -- directly applies the first code action
     -- These are just basically `vim.lsp.buf.code_action` with the `apply` option with some filters
     -- If there's only one code action, it gets automatically applied.
     quickfix = nil, -- can be filtered with the `quickfix_filter` option bellow
