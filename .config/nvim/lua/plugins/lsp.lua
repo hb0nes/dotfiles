@@ -131,6 +131,9 @@ vim.lsp.set_log_level("debug")
 ---bashls
 lsp.bashls.setup({ on_attach = on_attach })
 
+---puppet
+lsp.puppet.setup({ on_attach = on_attach, filetypes = { "puppet", "epuppet" } })
+
 --- dockerfile ls
 lsp.dockerls.setup({ on_attach = on_attach })
 

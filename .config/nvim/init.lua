@@ -173,24 +173,24 @@ local plugins = {
 			require("plugins.treesitter")
 		end,
 	},
-	{
-		"Bekaboo/dropbar.nvim",
-		event = "BufReadPre",
-		init = function()
-			vim.keymap.set("n", "g<Tab>", function()
-				require("dropbar.api").pick()
-			end)
-		end,
-		config = function()
-			require("plugins.dropbar")
-		end,
-	},
+	-- {
+	-- 	"Bekaboo/dropbar.nvim",
+	-- 	event = "BufReadPre",
+	-- 	init = function()
+	-- 		vim.keymap.set("n", "g<Tab>", function()
+	-- 			require("dropbar.api").pick()
+	-- 		end)
+	-- 	end,
+	-- 	config = function()
+	-- 		require("plugins.dropbar")
+	-- 	end,
+	-- },
 	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
 		keys = {
 			{
-				"<leader>t",
+				"<Cr>",
 				mode = { "n", "o", "x" },
 				function()
 					require("flash").treesitter()

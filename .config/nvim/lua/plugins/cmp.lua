@@ -37,37 +37,38 @@ local cmp_kinds = {
 }
 
 cmp.setup({
-	-- view = {
-	entries = { name = "custom", selection_order = "near_cursor" },
-	-- },
+	view = {
+		entries = { name = "custom", selection_order = "near_cursor" },
+	},
 	snippet = {
 		expand = function(args)
 			require("luasnip").lsp_expand(args.body)
 		end,
 	},
-  window = {
-    completion = {
-      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-      col_offset = -3,
-      side_padding = 0,
-      border = nil,
-    },
-    documentation = {
-      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-      col_offset = -3,
-      side_padding = 0,
-      border = nil,
-    },
-  },
-  formatting = {
-    format = function(_, vim_item)
-      vim_item.kind = (cmp_kinds[vim_item.kind] or '') .. vim_item.kind
-      return vim_item
-    end,
-  },
+	window = {
+		completion = {
+			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+			col_offset = -3,
+			side_padding = 0,
+			border = nil,
+		},
+		documentation = {
+			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+			col_offset = -3,
+			side_padding = 0,
+			border = nil,
+		},
+	},
+	formatting = {
+		format = function(_, vim_item)
+			vim_item.kind = (cmp_kinds[vim_item.kind] or "") .. vim_item.kind
+			return vim_item
+		end,
+	},
 	mapping = {
 		["<C-u>"] = cmp.mapping.scroll_docs(-4),
 		["<C-d>"] = cmp.mapping.scroll_docs(4),
+		["<C-Space>"] = cmp.mapping.complete(),
 		["<CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = false,

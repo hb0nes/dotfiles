@@ -4,7 +4,7 @@ if not ok then
 end
 
 require("nvim-treesitter.configs").setup({
-	highlight = { enable = true, disable = { "markdown" } },
+	highlight = { enable = true },
 	ensure_installed = {
 		"bash",
 		"go",
@@ -16,6 +16,7 @@ require("nvim-treesitter.configs").setup({
 		"regex",
 		"requirements",
 		"rust",
+		"puppet",
 		"toml",
 		"yaml",
 		"vim",
@@ -62,15 +63,6 @@ require("nvim-treesitter.configs").setup({
 				["gp"] = { query = "@function.outer", desc = "🌲peek function definition" },
 				["gcp"] = { query = "@class.outer", desc = "🌲peek class definition" },
 			},
-		},
-	},
-	textsubjects = {
-		enable = true,
-		prev_selection = ",",
-		keymaps = {
-			["."] = "textsubjects-smart",
-			[";"] = "textsubjects-container-outer",
-			[","] = "textsubjects-container-inner",
 		},
 	},
 })

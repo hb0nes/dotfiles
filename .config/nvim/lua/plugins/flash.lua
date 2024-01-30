@@ -3,6 +3,8 @@ if not ok then
 	return
 end
 
+vim.api.nvim_set_hl(0, "FlashJump", { fg = "#ffffff", bg = "#f50f0f", bold = true })
+
 local opts = {
 	-- labels = "abcdefghijklmnopqrstuvwxyz",
 	labels = "asdfghjklqwertyuiopzxcvbnm",
@@ -47,28 +49,6 @@ local opts = {
 		-- it will either end in a jump or terminate the search
 		max_length = false, ---@type number|false
 	},
-	jump = {
-		-- save location in the jumplist
-		jumplist = true,
-		-- jump position
-		pos = "start", ---@type "start" | "end" | "range"
-		-- add pattern to search history
-		history = false,
-		-- add pattern to search register
-		register = false,
-		-- clear highlight after jump
-		nohlsearch = false,
-		-- automatically jump when there is only one match
-		autojump = false,
-		-- You can force inclusive/exclusive jumps by setting the
-		-- `inclusive` option. By default it will be automatically
-		-- set based on the mode.
-		inclusive = nil, ---@type boolean?
-		-- jump position offset. Not used for range jumps.
-		-- 0: default
-		-- 1: when pos == "end" and pos < current position
-		offset = nil, ---@type number
-	},
 	label = {
 		-- allow uppercase labels
 		uppercase = true,
@@ -82,7 +62,7 @@ local opts = {
 		-- show the label before the match
 		before = false, ---@type boolean|number[]
 		-- position of the label extmark
-		style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
+		style = "eol", ---@type "eol" | "overlay" | "right_align" | "inline"
 		-- flash tries to re-use labels that were already assigned to a position,
 		-- when typing more characters. By default only lower-case labels are re-used.
 		reuse = "lowercase", ---@type "lowercase" | "all" | "none"
@@ -121,7 +101,7 @@ local opts = {
 			match = "Added",
 			current = "Added",
 			backdrop = "FlashBackdrop",
-			label = "DraculaRedInverse",
+			label = "FlashJump",
 		},
 	},
 	-- action to perform when picking a label.
@@ -144,7 +124,7 @@ local opts = {
 			-- when `true`, flash will be activated during regular search by default.
 			-- You can always toggle when searching with `require("flash").toggle()`
 			enabled = true,
-			highlight = { matches = true, backdrop = true },
+			highlight = { matches = true, backdrop = false },
 			jump = { history = true, register = true, nohlsearch = true },
 			search = {
 				-- `forward` will be automatically set to the search direction
@@ -214,6 +194,7 @@ local opts = {
 			highlight = {
 				backdrop = false,
 				matches = false,
+				rainbow = true,
 			},
 		},
 		treesitter_search = {
