@@ -4,8 +4,6 @@ if not ok then
 end
 
 -- Change highlight
-vim.api.nvim_set_hl(0, "TreesitterContextBottom", { force = true, link = "DraculaFgUnderline" })
-vim.api.nvim_set_hl(0, "TreesitterContext", { force = true, link = "DraculaFg" })
 require("nvim-treesitter.configs").setup({
   highlight = { enable = true },
   ensure_installed = {
@@ -72,3 +70,9 @@ require("nvim-treesitter.configs").setup({
 })
 
 vim.treesitter.language.register("bash", "cheat")
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+  callback = function()
+    vim.api.nvim_set_hl(0, "TreesitterContext", { force = true, link = "Normal" })
+    vim.api.nvim_set_hl(0, "TreesitterContextBottom", { force = true, link = "Underlined" })
+  end
+})

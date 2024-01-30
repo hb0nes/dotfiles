@@ -226,8 +226,12 @@ local plugins = {
     -- optional for icon support
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
+      local fzf = require("fzf-lua")
+      fzf.setup({})
+      vim.keymap.set("n", '<leader>g', fzf.live_grep_native )
+      vim.keymap.set("n", '<leader>s', fzf.files )
+      vim.keymap.set("n", '<leader>d', fzf.buffers )
       -- calling `setup` is optional for customization
-      require("fzf-lua").setup({})
     end,
   },
 }
