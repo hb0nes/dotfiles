@@ -64,7 +64,7 @@ require("nvim-treesitter.configs").setup({
       enable = true,
       border = "rounded",
       peek_definition_code = {
-        ["gp"] = { query = "@function.outer", desc = "🌲peek function definition" },
+        ["<leader>p"] = { query = "@function.outer", desc = "🌲peek function definition" },
         ["gcp"] = { query = "@class.outer", desc = "🌲peek class definition" },
       },
     },

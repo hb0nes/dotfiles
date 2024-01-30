@@ -13,51 +13,27 @@ local opts = { noremap = true, silent = true }
 -- Setup lspconfig.
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-vim.api.nvim_set_hl(0, "NormalFloat", { force = true, link = "Normal" })
-vim.api.nvim_set_hl(0, "FloatBorder", { force = true, link = "Constant" })
-
 ---------------
 --- keymaps ---
 ---------------
 vim.keymap.set(
   "n",
-  "d=",
+  "<leader>=",
   vim.diagnostic.goto_next,
   vim.tbl_extend("force", opts, { desc = "✨lsp go to next diagnostic" })
 )
 vim.keymap.set(
   "n",
-  "d-",
+  "<leader>-",
   vim.diagnostic.goto_prev,
   vim.tbl_extend("force", opts, { desc = "✨lsp go to prev diagnostic" })
 )
-vim.keymap.set(
-  "n",
-  "d/",
-  vim.diagnostic.setloclist,
-  vim.tbl_extend("force", opts, { desc = "✨lsp send diagnostics to loc list" })
-)
-vim.keymap.set(
-  "n",
-  "de",
-  vim.diagnostic.open_float,
-  vim.tbl_extend("force", opts, { desc = "✨lsp show diagnostic in floating window" })
-)
-vim.keymap.set(
-  "n",
-  "<C-j>",
-  ":silent! cnext<CR>",
-  vim.tbl_extend("force", opts, { desc = "Go to next item in location list." })
-)
-vim.keymap.set(
-  "n",
-  "<C-k>",
-  ":silent! cprev<CR>",
-  vim.tbl_extend("force", opts, { desc = "Go to prev item in location list." })
-)
-vim.keymap.set("n", "gq", ":cclose<CR>", vim.tbl_extend("force", opts, { desc = "Close location list." }))
 
 local on_attach = function(client, bufnr)
+  -- Override the way LSP floats look
+  vim.api.nvim_set_hl(0, "NormalFloat", { force = true, link = "Normal" })
+  vim.api.nvim_set_hl(0, "FloatBorder", { force = true, link = "Constant" })
+
   --- toggle inlay hints
   local function toggle_inlay_hints()
     if vim.g.inlay_hints_visible then
@@ -73,17 +49,7 @@ local on_attach = function(client, bufnr)
     end
   end
 
-  --- toggle diagnostics
   vim.g.diagnostics_visible = true
-  local function toggle_diagnostics()
-    if vim.g.diagnostics_visible then
-      vim.g.diagnostics_visible = false
-      vim.diagnostic.disable()
-    else
-      vim.g.diagnostics_visible = true
-      vim.diagnostic.enable()
-    end
-  end
 
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", bufopts, { desc = "✨lsp hover for docs" }))
@@ -93,31 +59,22 @@ local on_attach = function(client, bufnr)
     vim.lsp.buf.definition,
     vim.tbl_extend("force", bufopts, { desc = "✨lsp go to definition" })
   )
-  vim.keymap.set("n", "rn", function()
-    return ":IncRename " .. vim.fn.expand("<cword>")
-  end, { expr = true })
-  vim.keymap.set(
-    "n",
-    "gr",
-    vim.lsp.buf.references,
-    vim.tbl_extend("force", bufopts, { desc = "✨lsp go to references" })
-  )
-  vim.keymap.set(
-    "n",
-    "<leader>l",
-    toggle_diagnostics,
-    vim.tbl_extend("force", bufopts, { desc = "✨lsp toggle diagnostics" })
-  )
   vim.keymap.set(
     "n",
     "<leader>h",
     toggle_inlay_hints,
     vim.tbl_extend("force", bufopts, { desc = "✨lsp toggle inlay hints" })
   )
+  vim.keymap.set(
+    "n",
+    "<leader>d",
+    vim.diagnostic.open_float,
+    vim.tbl_extend("force", bufopts, { desc = "✨lsp toggle inlay hints" })
+  )
 end
 
 local lsp_flags = {
-  debounce_text_changes = 150,
+  debounce_text_changes = 500,
 }
 vim.lsp.set_log_level("debug")
 
@@ -228,8 +185,9 @@ vim.diagnostic.config({
   virtual_text = {
     source = "always",
     prefix = "●",
+    virt_text_pos = "right_align",
   },
-  underline = false,
+  underline = true,
   signs = true,
   severity_sort = true,
   float = {
@@ -237,12 +195,47 @@ vim.diagnostic.config({
     header = "",
     prefix = "",
     focusable = false,
+    border = "rounded",
   },
 })
-
---require("lspconfig.ui.windows").default_options.border = "rounded"
 
 -------------------
 --- lsp logging ---
 -------------------
 vim.lsp.set_log_level("off")
+
+vim.diagnostic.open_float = (function(orig)
+  return function(opts)
+    local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+    -- A more robust solution would check the "scope" value in `opts` to
+    -- determine where to get diagnostics from, but if you're only using
+    -- this for your own purposes you can make it as simple as you like
+    local diagnostics = vim.diagnostic.get(0, { lnum = lnum })
+    local max_severity = vim.diagnostic.severity.HINT
+    for _, d in ipairs(diagnostics) do
+      -- Equality is "less than" based on how the severities are encoded
+      if d.severity < max_severity then
+        max_severity = d.severity
+      end
+    end
+    local border_color = ({
+      [vim.diagnostic.severity.HINT] = "NonText",
+      [vim.diagnostic.severity.INFO] = "DraculaCyan",
+      [vim.diagnostic.severity.WARN] = "DraculaOrangeBold",
+      [vim.diagnostic.severity.ERROR] = "CodeActionLabel",
+    })[max_severity]
+    local opts = {
+      border = {
+        { "╭", border_color },
+        { "─", border_color },
+        { "╮", border_color },
+        { "│", border_color },
+        { "╯", border_color },
+        { "─", border_color },
+        { "╰", border_color },
+        { "│", border_color },
+      },
+    }
+    orig(opts)
+  end
+end)(vim.diagnostic.open_float)

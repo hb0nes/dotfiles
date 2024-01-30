@@ -34,6 +34,9 @@ local plugins = {
     "smjonas/inc-rename.nvim",
     config = function()
       require("inc_rename").setup()
+      vim.keymap.set("n", "R", function()
+        return ":IncRename " .. vim.fn.expand("<cword>")
+      end, { expr = true })
     end,
   },
   {
@@ -218,6 +221,15 @@ local plugins = {
       require("plugins.copilot")
     end,
   },
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      -- calling `setup` is optional for customization
+      require("fzf-lua").setup({})
+    end,
+  },
 }
 require("lazy").setup(plugins, nil)
 
@@ -262,6 +274,8 @@ vim.o.number = true
 vim.o.relativenumber = true
 vim.o.incsearch = false
 vim.o.hlsearch = false
+
+vim.keymap.set("n", "<leader>hi", ":so $VIMRUNTIME/syntax/hitest.vim<Cr>")
 
 -- Remove trailing whitespaces on save
 vim.cmd([[autocmd BufWritePre * %s/\s\+$//e]])

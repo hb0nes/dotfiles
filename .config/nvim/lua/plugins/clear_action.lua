@@ -43,8 +43,8 @@ local opts = {
     -- example: "<leader>aq" | { "<leader>aq", "Quickfix" }
     -- Or if you want more control: { key = "<leader>aq", mode = { "n" }, options = { desc = "Quickfix" } }
     -- `options` accepts the same keys as vim.keymap.set()
-    code_action = "df", -- a modified version of `vim.lsp.buf.code_action`
-    apply_first = "d1", -- directly applies the first code action
+    code_action = "<S-f>", -- a modified version of `vim.lsp.buf.code_action`
+    apply_first = "<S-1>", -- directly applies the first code action
     -- These are just basically `vim.lsp.buf.code_action` with the `apply` option with some filters
     -- If there's only one code action, it gets automatically applied.
     quickfix = nil, -- can be filtered with the `quickfix_filter` option bellow

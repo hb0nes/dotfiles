@@ -7,7 +7,7 @@ local icons = require("utils").icons
 
 outline.setup({
   outline_window = {
-    auto_jump = true,
+    auto_jump = false,
     width = 15,
   },
   outline_items = {
@@ -15,6 +15,10 @@ outline.setup({
   },
   symbol_folding = {
     autofold_depth = 1,
+    auto_unfold = {
+      -- Auto unfold currently hovered symbol
+      hovered = false,
+    },
   },
   -- These keymaps can be a string or a table for multiple keys.
   -- Set to `{}` to disable. (Using 'nil' will fallback to default keys)
