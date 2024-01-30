@@ -83,8 +83,6 @@ local plugins = {
 	},
 	{
 		"stevearc/conform.nvim",
-		event = { "BufWritePre" },
-		cmd = { "ConformInfo" },
 		config = function()
 			require("plugins.conform")
 		end,
@@ -116,7 +114,7 @@ local plugins = {
 		cmd = "Outline",
 		keys = {
 			{
-				"<C-o>",
+				"<leader>o",
 				function()
 					require("nvim-tree.api").tree.close()
 					vim.cmd.Outline()
@@ -214,7 +212,11 @@ local plugins = {
   "luckasRanarison/clear-action.nvim",
 	  opts = require('plugins.clear_action')
   },
-  'github/copilot.vim',
+  { 'github/copilot.vim',
+    config = function()
+      require("plugins.copilot")
+    end,
+  },
 }
 require("lazy").setup(plugins, nil)
 
@@ -241,6 +243,12 @@ vim.o.expandtab = true
 vim.api.nvim_set_keymap("c", "w!!", "w !sudo tee > /dev/null %", { noremap = true, silent = true })
 -- Save with ctrl or alt s
 vim.keymap.set('n', '<A-s>', ':w<Cr>')
+
+vim.keymap.set(
+	"n",
+	"<leader>q",
+	':only<CR>'
+)
 
 -- Copy to clipboard on yank
 vim.o.clipboard = "unnamed"

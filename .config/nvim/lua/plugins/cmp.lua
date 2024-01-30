@@ -37,9 +37,9 @@ local cmp_kinds = {
 }
 
 cmp.setup({
-	view = {
-		entries = { name = "custom", selection_order = "near_cursor" },
-	},
+	-- view = {
+	entries = { name = "custom", selection_order = "near_cursor" },
+	-- },
 	snippet = {
 		expand = function(args)
 			require("luasnip").lsp_expand(args.body)
@@ -66,15 +66,15 @@ cmp.setup({
     end,
   },
 	mapping = {
-		["<C-k>"] = cmp.mapping.scroll_docs(-4),
-		["<C-j>"] = cmp.mapping.scroll_docs(4),
+		["<C-u>"] = cmp.mapping.scroll_docs(-4),
+		["<C-d>"] = cmp.mapping.scroll_docs(4),
 		["<CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = false,
 		}),
 		["<C-e>"] = cmp.mapping.abort(),
 
-		["<Tab>"] = cmp.mapping(function(fallback)
+		["<C-j>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
 			else
@@ -82,7 +82,7 @@ cmp.setup({
 			end
 		end, { "i", "s" }),
 
-		["<S-Tab>"] = cmp.mapping(function(fallback)
+		["<C-k>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
 			else

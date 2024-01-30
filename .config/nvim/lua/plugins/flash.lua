@@ -121,7 +121,7 @@ local opts = {
 			match = "Added",
 			current = "Added",
 			backdrop = "FlashBackdrop",
-			label = "NvimInternalError",
+			label = "DraculaRedInverse",
 		},
 	},
 	-- action to perform when picking a label.

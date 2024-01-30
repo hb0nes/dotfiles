@@ -30,3 +30,7 @@ conform.setup({
 		return { timeout_ms = 1000, lsp_fallback = true }
 	end,
 })
+vim.keymap.set("n", "<leader>f", function()
+    require("conform").format()
+  end)
+

@@ -58,15 +58,8 @@ vim.keymap.set(
 	':cclose<CR>',
 	vim.tbl_extend("force", opts, { desc = "Close location list." })
 )
-vim.keymap.set(
-	"n",
-	"<leader>q",
-	':only<CR>',
-	vim.tbl_extend("force", opts, { desc = "Close all other panes." })
-)
 
 local on_attach = function(client, bufnr)
-	-- vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
 	--- toggle inlay hints
 	local function toggle_inlay_hints()
@@ -95,22 +88,6 @@ local on_attach = function(client, bufnr)
 		end
 	end
 
-	--- autocmd to show diagnostics on CursorHold
-	--vim.api.nvim_create_autocmd("CursorHold", {
-	--	buffer = bufnr,
-	--	desc = "✨lsp show diagnostics on CursorHold",
-	--	callback = function()
-	--		local hover_opts = {
-	--			focusable = false,
-	--			close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-	--			border = "rounded",
-	--			source = "always",
-	--			prefix = " ",
-	--		}
-	--		vim.diagnostic.open_float(nil, hover_opts)
-	--	end,
-	--})
-
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", bufopts, { desc = "✨lsp hover for docs" }))
 	vim.keymap.set(
@@ -128,7 +105,6 @@ local on_attach = function(client, bufnr)
 		vim.lsp.buf.references,
 		vim.tbl_extend("force", bufopts, { desc = "✨lsp go to references" })
 	)
-	vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, vim.tbl_extend("force", bufopts, { desc = "✨lsp format" }))
 	vim.keymap.set(
 		"n",
 		"<leader>l",
