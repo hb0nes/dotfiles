@@ -3,6 +3,8 @@ if not ok then
 	return
 end
 
+vim.filetype.add({ extension = { epp = "puppet" } })
+
 require("nvim-treesitter.configs").setup({
 	highlight = { enable = true },
 	ensure_installed = {
