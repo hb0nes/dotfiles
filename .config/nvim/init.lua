@@ -227,7 +227,14 @@ local plugins = {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       local fzf = require("fzf-lua")
-      fzf.setup({})
+      local actions = require "fzf-lua.actions"
+      fzf.setup({
+        buffers = {
+          actions = {
+            ["ctrl-d"] = { fn = actions.buf_del, reload = true },
+          }
+        }
+      })
       vim.keymap.set("n", '<leader>g', fzf.live_grep_native )
       vim.keymap.set("n", '<leader>s', fzf.files )
       vim.keymap.set("n", '<leader>d', fzf.buffers )
