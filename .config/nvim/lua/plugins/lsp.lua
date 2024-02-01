@@ -6,6 +6,7 @@ local function configure()
   -- UI
   vim.diagnostic.config({
     virtual_text = {
+      severity = vim.diagnostic.severity.ERROR,
       source = "always",
       prefix = "●",
       virt_text_pos = "eol",
