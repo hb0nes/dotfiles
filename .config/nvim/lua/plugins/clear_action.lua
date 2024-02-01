@@ -79,4 +79,9 @@ local opts = {
   },
 }
 
-return opts
+return {
+  {
+    "luckasRanarison/clear-action.nvim",
+    opts = opts,
+  },
+}

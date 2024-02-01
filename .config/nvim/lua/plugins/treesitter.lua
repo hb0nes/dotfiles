@@ -1,10 +1,12 @@
-local ok, _ = pcall(require, "nvim-treesitter")
-if not ok then
-  return
-end
-
 -- Change highlight
-require("nvim-treesitter.configs").setup({
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  callback = function()
+    vim.api.nvim_set_hl(0, "TreesitterContext", { force = true, link = "Normal" })
+    vim.api.nvim_set_hl(0, "TreesitterContextBottom", { force = true, link = "Underlined" })
+  end,
+})
+
+local opts = {
   highlight = { enable = true },
   ensure_installed = {
     "bash",
@@ -67,12 +69,30 @@ require("nvim-treesitter.configs").setup({
       },
     },
   },
-})
+}
 
-vim.treesitter.language.register("bash", "cheat")
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-  callback = function()
-    vim.api.nvim_set_hl(0, "TreesitterContext", { force = true, link = "Normal" })
-    vim.api.nvim_set_hl(0, "TreesitterContextBottom", { force = true, link = "Underlined" })
-  end
-})
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    dependencies = {
+      { "nvim-treesitter/nvim-treesitter-textobjects" },
+      {
+        "nvim-treesitter/nvim-treesitter-context",
+        event = "BufEnter",
+        keys = {
+          {
+            "[c",
+            function()
+              require("treesitter-context").go_to_context()
+            end,
+          },
+        },
+        opts = { max_lines = 3 },
+      },
+    },
+    config = function()
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
+}

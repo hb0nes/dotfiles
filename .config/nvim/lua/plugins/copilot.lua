@@ -1,9 +1,49 @@
-vim.keymap.set("i", "<M-f>", "<Plug>(copilot-accept-word)")
-vim.keymap.set("i", "<M-n>", "<Plug>(copilot-next)")
-vim.keymap.set("i", "<M-b>", "<Plug>(copilot-previous)")
-vim.keymap.set("i", "<M-i>", "<Plug>(copilot-suggest)")
-vim.keymap.set("i", "<C-space>", 'copilot#Accept("\\<CR>")', {
-  expr = true,
-  replace_keycodes = false,
-})
-vim.g.copilot_no_tab_map = true
+local opts = {
+  panel = {
+    enabled = false,
+    auto_refresh = false,
+    keymap = {
+      jump_prev = "[[",
+      jump_next = "]]",
+      accept = "<CR>",
+      refresh = "[r",
+      open = "<M-CR>",
+    },
+    layout = {
+      position = "bottom", -- | top | left | right
+      ratio = 0.2,
+    },
+  },
+  suggestion = {
+    enabled = true,
+    auto_trigger = true,
+    debounce = 75,
+    keymap = {
+      accept = "<C-space>",
+      accept_word = false,
+      accept_line = false,
+      next = "<M-]>",
+      prev = "<M-[>",
+      dismiss = "<C-]>",
+    },
+  },
+  filetypes = {
+    help = false,
+    hgcommit = false,
+    svn = false,
+    cvs = false,
+    ["."] = false,
+  },
+  copilot_node_command = "node", -- Node.js version must be > 18.x
+  server_opts_overrides = {},
+}
+return {
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup(opts)
+    end,
+  },
+}

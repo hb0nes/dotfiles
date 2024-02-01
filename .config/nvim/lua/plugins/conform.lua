@@ -1,9 +1,4 @@
-local conform_ok, conform = pcall(require, "conform")
-if not conform_ok then
-  return
-end
-
-conform.setup({
+local opts = {
   formatters_by_ft = {
     json = { "jq" },
     go = { "gofmt", "goimports" },
@@ -37,7 +32,16 @@ conform.setup({
     end
     return { timeout_ms = 1000, lsp_fallback = true }
   end,
-})
-vim.keymap.set("n", "<leader>f", function()
-  require("conform").format()
-end)
+}
+
+local function configure()
+  vim.keymap.set("n", "<leader>f", require("conform").format)
+  require("conform").setup(opts)
+end
+
+return {
+  {
+    "stevearc/conform.nvim",
+    config = configure,
+  },
+}

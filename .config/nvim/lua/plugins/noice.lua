@@ -1,41 +1,4 @@
-local ok, noice = pcall(require, "noice")
-if not ok then
-  return
-end
-
-local noice_hl = vim.api.nvim_create_augroup("NoiceHighlights", {})
-local noice_cmd_types = {
-  CmdLine = "Constant",
-  Input = "Constant",
-  Calculator = "Constant",
-  Lua = "Constant",
-  Filter = "Constant",
-  Rename = "Constant",
-  Substitute = "NoiceCmdlinePopupBorderSearch",
-  Help = "Constant",
-}
-vim.api.nvim_clear_autocmds({ group = noice_hl })
-vim.api.nvim_create_autocmd("BufEnter", {
-  group = noice_hl,
-  desc = "redefinition of noice highlight groups",
-  callback = function()
-    for type, hl in pairs(noice_cmd_types) do
-      vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder" .. type, {})
-      vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder" .. type, { link = hl })
-    end
-    vim.api.nvim_set_hl(0, "NoiceConfirmBorder", {})
-    vim.api.nvim_set_hl(0, "NoiceConfirmBorder", { link = "Constant" })
-  end,
-})
-
-local cmdline_opts = {
-  border = {
-    style = "rounded",
-    text = { top = "" },
-  },
-}
-
-noice.setup({
+local opts = {
   cmdline = {
     view = "cmdline_popup",
     format = {
@@ -128,16 +91,63 @@ noice.setup({
     { filter = { find = "No signature help" }, skip = true },
     { filter = { find = "E37" }, skip = true },
   },
-})
+}
 
-vim.keymap.set({ "n", "i", "s" }, "<c-d>", function()
-  if not require("noice.lsp").scroll(4) then
-    return "<c-f>"
-  end
-end, { silent = true, expr = true })
+local function configure()
+  local noice_hl = vim.api.nvim_create_augroup("NoiceHighlights", {})
+  local noice_cmd_types = {
+    CmdLine = "Constant",
+    Input = "Constant",
+    Calculator = "Constant",
+    Lua = "Constant",
+    Filter = "Constant",
+    Rename = "Constant",
+    Substitute = "NoiceCmdlinePopupBorderSearch",
+    Help = "Constant",
+  }
+  vim.api.nvim_clear_autocmds({ group = noice_hl })
+  vim.api.nvim_create_autocmd("BufEnter", {
+    group = noice_hl,
+    desc = "redefinition of noice highlight groups",
+    callback = function()
+      for type, hl in pairs(noice_cmd_types) do
+        vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder" .. type, {})
+        vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder" .. type, { link = hl })
+      end
+      vim.api.nvim_set_hl(0, "NoiceConfirmBorder", {})
+      vim.api.nvim_set_hl(0, "NoiceConfirmBorder", { link = "Constant" })
+    end,
+  })
 
-vim.keymap.set({ "n", "i", "s" }, "<c-u>", function()
-  if not require("noice.lsp").scroll(-4) then
-    return "<c-b>"
-  end
-end, { silent = true, expr = true })
+  local cmdline_opts = {
+    border = {
+      style = "rounded",
+      text = { top = "" },
+    },
+  }
+
+  vim.keymap.set({ "n", "i", "s" }, "<c-d>", function()
+    if not require("noice.lsp").scroll(4) then
+      return "<c-d>"
+    end
+  end, { silent = true, expr = true })
+
+  vim.keymap.set({ "n", "i", "s" }, "<c-u>", function()
+    if not require("noice.lsp").scroll(-4) then
+      return "<c-u>"
+    end
+  end, { silent = true, expr = true })
+
+  require("noice").setup(opts)
+end
+
+return {
+  {
+    "folke/noice.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    config = configure,
+  },
+}

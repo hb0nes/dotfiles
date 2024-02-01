@@ -1,10 +1,3 @@
-local ok, flash = pcall(require, "flash")
-if not ok then
-  return
-end
-
-vim.api.nvim_set_hl(0, "FlashJump", { fg = "#ffffff", bg = "#f50f0f", bold = true })
-
 local opts = {
   -- labels = "abcdefghijklmnopqrstuvwxyz",
   labels = "asdfghjklqwertyuiopzxcvbnm",
@@ -235,4 +228,22 @@ local opts = {
   },
 }
 
-flash.setup(opts)
+return {
+  {
+    "folke/flash.nvim",
+    keys = {
+      {
+        "<Cr>",
+        mode = { "n", "o", "x" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash Treesitter",
+      },
+    },
+    config = function()
+      vim.api.nvim_set_hl(0, "FlashJump", { fg = "#ffffff", bg = "#f50f0f", bold = true })
+      require("flash").setup(opts)
+    end,
+  },
+}

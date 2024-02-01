@@ -1,11 +1,12 @@
-local ok, outline = pcall(require, "outline")
-if not ok then
-  return
-end
+-- Close Outline when leaving buffer
+vim.api.nvim_create_autocmd({ "QuitPre" }, {
+  pattern = { "*" },
+  command = "OutlineClose",
+})
 
 local icons = require("utils").icons
 
-outline.setup({
+local opts = {
   outline_window = {
     auto_jump = false,
     width = 15,
@@ -101,4 +102,16 @@ outline.setup({
       Variable = { icon = icons.kinds.Variable, hl = "@constant" },
     },
   },
-})
+}
+
+return {
+  {
+    "hedyhli/outline.nvim",
+    lazy = true,
+    cmd = { "Outline", "OutlineOpen", "OutlineClose" },
+    keys = {
+      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+    },
+    opts = opts,
+  },
+}
