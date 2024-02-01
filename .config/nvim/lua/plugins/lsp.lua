@@ -31,8 +31,6 @@ vim.keymap.set(
 
 local on_attach = function(client, bufnr)
   -- Override the way LSP floats look
-  vim.api.nvim_set_hl(0, "NormalFloat", { force = true, link = "Normal" })
-  vim.api.nvim_set_hl(0, "FloatBorder", { force = true, link = "Constant" })
 
   --- toggle inlay hints
   local function toggle_inlay_hints()
@@ -69,7 +67,7 @@ local on_attach = function(client, bufnr)
     "n",
     "<leader>d",
     vim.diagnostic.open_float,
-    vim.tbl_extend("force", bufopts, { desc = "✨lsp toggle inlay hints" })
+    vim.tbl_extend("force", bufopts, { desc = "✨lsp toggle diagnostics" })
   )
 end
 
@@ -185,7 +183,7 @@ vim.diagnostic.config({
   virtual_text = {
     source = "always",
     prefix = "●",
-    virt_text_pos = "right_align",
+    virt_text_pos = "eol",
   },
   underline = true,
   signs = true,

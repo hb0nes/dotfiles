@@ -21,6 +21,9 @@ conform.setup({
     stylua = {
       prepend_args = { "--indent-width=2", "--indent-type=Spaces" },
     },
+    rustfmt = {
+      prepend_args = { "--config", "tab_spaces=2" },
+    },
   },
   format_on_save = function()
     local next = next
