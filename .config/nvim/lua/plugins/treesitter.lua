@@ -1,8 +1,10 @@
--- Change highlight
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
   callback = function()
+    -- Create a better context with a line separator
     vim.api.nvim_set_hl(0, "TreesitterContext", { force = true, link = "Normal" })
     vim.api.nvim_set_hl(0, "TreesitterContextBottom", { force = true, link = "Underlined" })
+    -- Highlighting for Types was italic, horrible
+    vim.api.nvim_set_hl(0, "Type", { force = true, link = "DraculaCyan" })
   end,
 })
 
