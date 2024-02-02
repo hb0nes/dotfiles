@@ -59,12 +59,12 @@ fzf-lua.lua contains the current keybindings for it, for which (imo) the most us
 - `<leader>ls` - list symbols
 - `<leader>b`  - list buffers
 
-
 ### Copilot
 Copilot config can be found in plugins/copilot.lua.
-By default `<C-space>` is used to accept suggestions and suggestions are given by default.
-Check out the file for other keybinds.
+By default `<C-space>` is used to accept suggestions and suggestions are given automatically while typing.
 If the suggestion text jumping around all the time is too confusing, disable that feature.
+
+Check out the file for other keybinds and settings.
 
 ### CopilotChat
 
