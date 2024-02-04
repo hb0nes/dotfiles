@@ -233,7 +233,7 @@ return {
     "folke/flash.nvim",
     keys = {
       {
-        "<Cr>",
+        "<Backspace>",
         mode = { "n", "o", "x" },
         function()
           require("flash").treesitter()
