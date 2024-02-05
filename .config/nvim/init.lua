@@ -1,6 +1,6 @@
 -- Require config
-require("keymaps")
 require("opts")
+require("keymaps")
 
 -- Setup plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
