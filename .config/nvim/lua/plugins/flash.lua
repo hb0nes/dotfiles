@@ -87,12 +87,12 @@ local opts = {
     -- show a backdrop with hl FlashBackdrop
     backdrop = false,
     -- Highlight the search matches
-    matches = false,
+    matches = true,
     -- extmark priority
     priority = 9999,
     groups = {
-      match = "Added",
-      current = "Added",
+      match = "DraculaRed",
+      current = "DraculaGreenItalicUnderline",
       backdrop = "FlashBackdrop",
       label = "FlashJump",
     },
@@ -231,19 +231,12 @@ local opts = {
 return {
   {
     "folke/flash.nvim",
-    keys = {
-      {
-        "\\",
-        mode = { "n", "o", "x" },
-        function()
-          require("flash").treesitter()
-        end,
-        desc = "Flash Treesitter",
-      },
-    },
+    keys = { "\\", "/", "f", "t" },
     config = function()
+      local flash = require("flash")
       vim.api.nvim_set_hl(0, "FlashJump", { fg = "#ffffff", bg = "#f50f0f", bold = true })
-      require("flash").setup(opts)
+      vim.keymap.set("n", "\\", flash.treesitter)
+      flash.setup(opts)
     end,
   },
 }
