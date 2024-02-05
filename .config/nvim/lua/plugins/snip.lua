@@ -13,10 +13,10 @@ local function configure()
     updateevents = "TextChanged,TextChangedI",
     store_selection_keys = "<c-s>",
     ext_opts = {
-      [types.insertNode] = {
-        visited = { hl_group = "Comment" },
-        unvisited = { hl_group = "Comment" },
-      },
+      -- [types.insertNode] = {
+      --   visited = { hl_group = "Comment" },
+      --   unvisited = { hl_group = "Comment" },
+      -- },
       [types.choiceNode] = {
         active = {
           virt_text = { { "●", "InsertMode" } },
