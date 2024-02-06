@@ -1,6 +1,6 @@
 local opts = {
   timeout = 10000,
-  render = "default",
+  render = "wrapped-compact",
   stages = "fade_in_slide_out",
   on_open = function(win)
     vim.api.nvim_win_set_config(win, { focusable = false })

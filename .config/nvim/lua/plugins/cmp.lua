@@ -51,7 +51,6 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
 
 local function configure()
   local cmp = require("cmp")
-  local cmp_autopairs = require("nvim-autopairs.completion.cmp")
   local opts = {
     view = {
       entries = { name = "custom", selection_order = "near_cursor" },
@@ -137,6 +136,9 @@ local function configure()
     },
   }
   cmp.setup.cmdline({ "/", "?" }, {
+    view = {
+      entries = { name = "wildmenu", separator = "|" },
+    },
     mapping = cmp.mapping.preset.cmdline(),
     window = { completion = { col_offset = 0 } },
     formatting = { fields = { "abbr" } },
@@ -156,8 +158,6 @@ local function configure()
     }),
   })
 
-  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-
   cmp.setup(opts)
 end
 
@@ -171,7 +171,6 @@ return {
       "hrsh7th/cmp-cmdline",
       "lukas-reineke/cmp-under-comparator",
       "saadparwaiz1/cmp_luasnip",
-      "windwp/nvim-autopairs",
     },
     config = configure,
   },

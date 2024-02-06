@@ -3,7 +3,7 @@ local opts = {
   labels = "asdfghjklqwertyuiopzxcvbnm",
   search = {
     -- search/jump in all windows
-    multi_window = true,
+    multi_window = false,
     -- search direction
     forward = true,
     -- when `false`, find only matches in the given direction
