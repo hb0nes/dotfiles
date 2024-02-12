@@ -1,3 +1,6 @@
+--set pumheight for max completion items
+vim.o.pumheight = 10
+
 local cmp_kinds = {
   Text = "  ",
   Method = "  ",
