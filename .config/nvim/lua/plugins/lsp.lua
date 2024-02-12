@@ -11,7 +11,7 @@ local function configure()
       prefix = "●",
       virt_text_pos = "eol",
     },
-    underline = true,
+    underline = false,
     signs = true,
     severity_sort = true,
     float = {

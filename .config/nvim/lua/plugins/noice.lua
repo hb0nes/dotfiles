@@ -49,6 +49,9 @@ local opts = {
     signature = { enabled = true },
     documentation = {
       opts = {
+        size = {
+          max_height = 10,
+        },
         win_options = {
           concealcursor = "n",
           conceallevel = 3,

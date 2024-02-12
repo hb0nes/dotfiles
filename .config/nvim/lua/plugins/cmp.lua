@@ -52,6 +52,9 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
 local function configure()
   local cmp = require("cmp")
   local opts = {
+    completion = {
+      autocomplete = false,
+    },
     view = {
       entries = { name = "custom", selection_order = "near_cursor" },
     },
@@ -63,20 +66,25 @@ local function configure()
     window = {
       completion = {
         winhighlight = "Normal:Normal,FloatBorder:Constant,Search:None",
-        col_offset = -3,
+        col_offset = 0,
         side_padding = 0,
         border = "rounded",
       },
       documentation = {
         winhighlight = "Normal:Normal,FloatBorder:Constant,Search:None",
-        col_offset = -3,
+        col_offset = 0,
         side_padding = 0,
         border = "rounded",
       },
     },
     formatting = {
       format = function(_, vim_item)
-        vim_item.kind = (cmp_kinds[vim_item.kind] or "") .. vim_item.kind
+        vim_item.kind = (cmp_kinds[vim_item.kind] or "") -- .. vim_item.kind
+        vim_item.abbr = string.sub(vim_item.abbr, 1, 20)
+        if vim_item.menu == nil then
+          vim_item.menu = ""
+        end
+        vim_item.menu = string.sub(vim_item.menu, 1, 20)
         return vim_item
       end,
     },
@@ -159,6 +167,12 @@ local function configure()
   })
 
   cmp.setup(opts)
+  vim.cmd([[
+  augroup CmpDebounceAuGroup
+    au!
+    au TextChangedI * lua require("plugins.cmp.debounce").debounce()
+  augroup end
+  ]])
 end
 
 return {
