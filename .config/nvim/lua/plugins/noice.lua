@@ -46,7 +46,14 @@ local opts = {
       ["cmp.entry.get_documentation"] = true,
     },
     hover = { enabled = true },
-    signature = { enabled = true },
+    signature = {
+      enabled = true,
+      opts = {
+        position = {
+          row = 3,
+        },
+      },
+    },
     documentation = {
       opts = {
         size = {
