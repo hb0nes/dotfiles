@@ -1,5 +1,5 @@
 --set pumheight for max completion items
-vim.o.pumheight = 10
+vim.o.pumheight = 15
 
 local cmp_kinds = {
   Text = "  ",
@@ -117,32 +117,20 @@ local function configure()
         end
       end, { "i", "s" }),
     },
-    sources = {
-      { name = "nvim_lsp", keyword_length = 1 },
-      { name = "luasnip", keyword_length = 2 },
-      {
-        name = "buffer",
-        keyword_length = 1,
-        option = {
-          get_bufnrs = function()
-            local bufs = {}
-            for _, win in ipairs(vim.api.nvim_list_wins()) do
-              bufs[vim.api.nvim_win_get_buf(win)] = true
-            end
-            return vim.tbl_keys(bufs)
-          end,
-        },
-      },
-      { name = "path" },
-    },
+    sources = cmp.config.sources({
+      { name = "nvim_lsp", priority = 8 },
+      { name = "buffer", priority = 7 },
+      { name = "luasnip", priority = 6 },
+      { name = "path", priority = 5 },
+    }),
     sorting = {
+      priority_weight = 1.0,
       comparators = {
-        cmp.config.compare.offset,
-        cmp.config.compare.exact,
-        cmp.config.compare.score,
+        cmp.config.compare.locality,
         cmp.config.compare.recently_used,
-        require("cmp-under-comparator").under,
-        cmp.config.compare.kind,
+        cmp.config.compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+        cmp.config.compare.offset,
+        cmp.config.compare.order,
       },
     },
   }

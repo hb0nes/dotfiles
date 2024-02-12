@@ -52,6 +52,7 @@ local opts = {
         size = {
           max_height = 10,
         },
+        position = { row = 0, col = 0 },
         win_options = {
           concealcursor = "n",
           conceallevel = 3,
