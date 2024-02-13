@@ -55,8 +55,9 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
 local function configure()
   local cmp = require("cmp")
   local opts = {
-    completion = {
-      autocomplete = false,
+    preselect = cmp.PreselectMode.None,
+    performance = {
+      debounce = 200,
     },
     view = {
       entries = { name = "custom", selection_order = "near_cursor" },
@@ -156,14 +157,7 @@ local function configure()
       { name = "cmdline" },
     }),
   })
-
   cmp.setup(opts)
-  vim.cmd([[
-  augroup CmpDebounceAuGroup
-    au!
-    au TextChangedI * lua require("plugins.cmp.debounce").debounce()
-  augroup end
-  ]])
 end
 
 return {
