@@ -17,7 +17,7 @@ local opts = {
       prepend_args = { "--indent-width=2", "--indent-type=Spaces" },
     },
     rustfmt = {
-      prepend_args = { "--config", "tab_spaces=2,max_width=160" },
+      prepend_args = { "--config", "tab_spaces=4,max_width=200" },
     },
   },
   format_on_save = function()
