@@ -12,7 +12,7 @@ vim.o.shiftwidth = 2
 vim.o.expandtab = true
 
 -- Copy to clipboard on yank
-vim.o.clipboard = "unnamed"
+vim.o.clipboard = "unnamedplus"
 
 -- Write vim swap file sooner, also helps with git diff tracking
 vim.o.updatetime = 100
