@@ -97,6 +97,7 @@ local function configure()
       vim.lsp.buf.hover,
       vim.tbl_extend("force", keymap_opts_buf, { desc = "✨lsp hover for docs" })
     )
+
     vim.keymap.set(
       "n",
       "gd",
@@ -131,7 +132,7 @@ local function configure()
     dockerls = {},
     yamlls = {},
     lua_ls = {},
-    jsonls = {},
+    -- jsonls = {},
     vimls = {},
     gopls = {
       settings = {

@@ -6,7 +6,7 @@ vim.keymap.set("n", "<C-A-k>", "<C-w>k")
 vim.keymap.set("n", "<C-A-h>", "<C-w>h")
 
 -- Save with sudo when typing :w!!
-vim.api.nvim_set_keymap("c", "w!!", "w !sudo tee > /dev/null %", { noremap = true, silent = true })
+--vim.api.nvim_set_keymap("c", "w!!", "w !sudo tee > /dev/null %", { noremap = true, silent = true })
 
 -- Save with alt s
 vim.keymap.set("n", "<A-s>", ":w<Cr>")

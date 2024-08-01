@@ -84,11 +84,11 @@ local function configure()
     formatting = {
       format = function(_, vim_item)
         vim_item.kind = (cmp_kinds[vim_item.kind] or "") -- .. vim_item.kind
-        vim_item.abbr = string.sub(vim_item.abbr, 1, 20)
+        vim_item.abbr = string.sub(vim_item.abbr, 1, 40)
         if vim_item.menu == nil then
           vim_item.menu = ""
         end
-        vim_item.menu = string.sub(vim_item.menu, 1, 20)
+        vim_item.menu = string.sub(vim_item.menu, 1, 40)
         return vim_item
       end,
     },
@@ -135,17 +135,18 @@ local function configure()
       },
     },
   }
-  cmp.setup.cmdline({ "/", "?" }, {
-    view = {
-      entries = { name = "wildmenu", separator = "|" },
-    },
-    mapping = cmp.mapping.preset.cmdline(),
-    window = { completion = { col_offset = 0 } },
-    formatting = { fields = { "abbr" } },
-    sources = {
-      { name = "buffer" },
-    },
-  })
+
+ cmp.setup.cmdline({ "/", "?" }, {
+   view = {
+     entries = { name = "wildmenu", separator = "|" },
+   },
+   mapping = cmp.mapping.preset.cmdline(),
+   window = { completion = { col_offset = 0 } },
+   formatting = { fields = { "abbr" } },
+   sources = {
+     { name = "buffer" },
+   },
+ })
 
   cmp.setup.cmdline(":", {
     mapping = cmp.mapping.preset.cmdline(),
