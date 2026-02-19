@@ -1,6 +1,6 @@
 return {
   {
-    "echasnovski/mini.animate",
+    "nvim-mini/mini.animate",
     version = false,
     config = function()
       local animate = require("mini.animate")

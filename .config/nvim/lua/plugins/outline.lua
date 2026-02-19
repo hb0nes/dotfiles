@@ -1,10 +1,67 @@
+local icons = {
+  diagnostics = { Error = "✘", Warn = "", Hint = "i", Info = "i" },
+  git = {
+    Add = "+",
+    Change = "~",
+    Delete = "-",
+  },
+  kinds = {
+    Array = "󰅪",
+    Branch = "",
+    Boolean = "◩",
+    Class = "󰠱",
+    Color = "󰏘",
+    Constant = "󰏿",
+    Constructor = "",
+    Enum = "",
+    EnumMember = "",
+    Event = "",
+    Field = "󰆨",
+    File = "󰈙",
+    Folder = "󰉋",
+    Function = "ƒ",
+    Interface = "",
+    Key = "",
+    Keyword = "󰌋",
+    Method = "󰆧",
+    Module = "󰏗 ",
+    Namespace = "󰅩",
+    Number = "󰎠",
+    Null = "󰟢",
+    Object = "⦿",
+    Operator = "+",
+    Package = "󰏗",
+    Property = "󰜢",
+    Reference = "",
+    Snippet = "",
+    String = "𝓐",
+    Struct = "󰙅",
+    Text = "",
+    TypeParameter = "󰆩",
+    Unit = "",
+    Value = "󰎠",
+    Variable = "󰀫",
+  },
+  cmp_sources = {
+    nvim_lsp = "✨",
+    luasnip = "🚀",
+    buffer = "📝",
+    path = "📁",
+    cmdline = "💻",
+  },
+  statusline = {
+    Error = "❗",
+    Warn = "⚠️ ",
+    Hint = "i",
+    Info = "💡",
+  },
+}
+
 -- Close Outline when leaving buffer
 vim.api.nvim_create_autocmd({ "QuitPre" }, {
   pattern = { "*" },
   command = "OutlineClose",
 })
-
-local icons = require("utils").icons
 
 local opts = {
   outline_window = {

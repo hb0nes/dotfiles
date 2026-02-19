@@ -1,6 +1,5 @@
 local function configure()
   -- Setup lspconfig.
-  local lsp = require("lspconfig")
   local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
   -- UI
@@ -66,11 +65,11 @@ local function configure()
     local function toggle_inlay_hints()
       if vim.g.inlay_hints_visible then
         vim.g.inlay_hints_visible = false
-        vim.lsp.inlay_hint.enable(bufnr, false)
+        vim.lsp.inlay_hint.enable(false)
       else
         if client.server_capabilities.inlayHintProvider then
           vim.g.inlay_hints_visible = true
-          vim.lsp.inlay_hint.enable(bufnr, true)
+          vim.lsp.inlay_hint.enable(true)
         else
           print("no inlay hints available")
         end
@@ -98,18 +97,27 @@ local function configure()
       vim.tbl_extend("force", keymap_opts_buf, { desc = "✨lsp hover for docs" })
     )
 
-    vim.keymap.set(
-      "n",
-      "gd",
-      vim.lsp.buf.definition,
-      vim.tbl_extend("force", keymap_opts_buf, { desc = "✨lsp go to definition" })
-    )
+    -- vim.keymap.set(
+    --   "n",
+    --   "gd",
+    --   vim.lsp.buf.definition,
+    --   vim.tbl_extend("force", keymap_opts_buf, { desc = "✨lsp go to definition" })
+    -- )
+
+    -- vim.keymap.set(
+    --   "n",
+    --   "gD",
+    --   vim.lsp.buf.type_definition,
+    --   vim.tbl_extend("force", keymap_opts_buf, { desc = "✨lsp go to type definition" })
+    -- )
+
     vim.keymap.set(
       "n",
       "<leader>h",
       toggle_inlay_hints,
       vim.tbl_extend("force", keymap_opts_buf, { desc = "✨lsp toggle inlay hints" })
     )
+
     vim.keymap.set(
       "n",
       "<leader>d",
@@ -128,12 +136,26 @@ local function configure()
 
   local server_opts = {
     bashls = {},
-    puppet = {},
+    puppet = {
+      root_markers = { "Puppetfile", "environment.conf", ".git" },
+    },
     dockerls = {},
-    yamlls = {},
+    yamlls = {
+      settings = {
+        yaml = {
+          format = {
+            printWidth = 500,
+            enable = false,
+          },
+        },
+      },
+    },
     lua_ls = {},
-    -- jsonls = {},
+    jsonls = {
+      cmd = { "npx", "-y", "vscode-json-languageserver", "--stdio" },
+    },
     vimls = {},
+    pylsp = {},
     gopls = {
       settings = {
         gopls = {
@@ -149,6 +171,7 @@ local function configure()
         },
       },
     },
+    kotlin_language_server = {},
     rust_analyzer = {
       settings = {
         ["rust-analyzer"] = {
@@ -162,8 +185,17 @@ local function configure()
 
   for server, opts in pairs(server_opts) do
     local merged_opts = vim.tbl_deep_extend("force", opts, default_opts)
-    lsp[server].setup(merged_opts)
+    vim.lsp.config(server, merged_opts)
+    vim.lsp.enable(server)
   end
+end
+
+local function get_python_path(workspace)
+  if vim.env.VIRTUAL_ENV then
+    return vim.env.VIRTUAL_ENV .. "/bin/python"
+  end
+  -- Fallback to system python
+  return vim.fn.exepath("python3") or "python"
 end
 
 return {

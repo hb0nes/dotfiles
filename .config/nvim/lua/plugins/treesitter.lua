@@ -1,10 +1,10 @@
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
+vim.api.nvim_create_autocmd({ "bufenter" }, {
   callback = function()
-    -- Create a better context with a line separator
-    vim.api.nvim_set_hl(0, "TreesitterContext", { force = true, link = "Normal" })
-    vim.api.nvim_set_hl(0, "TreesitterContextBottom", { force = true, link = "Underlined" })
-    -- Highlighting for Types was italic, horrible
-    vim.api.nvim_set_hl(0, "Type", { force = true, link = "DraculaCyan" })
+    -- create a better context with a line separator
+    vim.api.nvim_set_hl(0, "treesittercontext", { force = true, link = "normal" })
+    vim.api.nvim_set_hl(0, "treesittercontextbottom", { force = true, link = "underlined" })
+    -- highlighting for types was italic, horrible
+    vim.api.nvim_set_hl(0, "type", { force = true, link = "draculacyan" })
   end,
 })
 
@@ -44,6 +44,10 @@ local opts = {
         ["il"] = { query = "@loop.inner", desc = "🌲select inside loop" },
         ["ab"] = { query = "@block.outer", desc = "🌲select around block" },
         ["ib"] = { query = "@block.inner", desc = "🌲select inside block" },
+        ["ib"] = { query = "@block.inner", desc = "🌲select inside block" },
+        ["ai"] = { query = "@yaml_item.outer", desc = "YAML: around list item" },
+        ["ii"] = { query = "@yaml_item.inner", desc = "YAML: inside list item" },
+        ["ab"] = { query = "@yaml_block.outer", desc = "YAML: around block" },
       },
     },
     move = {
@@ -54,12 +58,14 @@ local opts = {
         ["gc="] = { query = "@class.outer", desc = "🌲go to next class" },
         ["gl="] = { query = "@loop.outer", desc = "🌲go to next loop" },
         ["gb="] = { query = "@block.outer", desc = "🌲go to next block" },
+        ["gi="] = { query = "@yaml_item.outer", desc = "🌲go to next yaml item" },
       },
       goto_previous_start = {
         ["[["] = { query = "@function.outer", desc = "🌲go to previous function" },
         ["gc-"] = { query = "@class.outer", desc = "🌲go to previous class" },
         ["gl-"] = { query = "@loop.outer", desc = "🌲go to previous loop" },
         ["gb-"] = { query = "@block.outer", desc = "🌲go to previous block" },
+        ["gi-"] = { query = "@yaml_item.outer", desc = "🌲go to previous yaml item" },
       },
     },
     lsp_interop = {

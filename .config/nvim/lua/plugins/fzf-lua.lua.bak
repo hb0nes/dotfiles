@@ -7,15 +7,38 @@ return {
       local fzf = require("fzf-lua")
       local actions = require("fzf-lua.actions")
       fzf.setup({
+        lsp = {
+          async = false,
+          jump1 = true,
+        },
+        -- grep = {
+        --   actions = {
+        --     ["enter"] = actions.file_tabedit,
+        --   },
+        -- },
+        -- files = {
+        --   actions = {
+        --     ["enter"] = actions.file_tabedit,
+        --   },
+        -- },
+        tabs = {
+          actions = {
+            ["ctrl-d"] = { fn = actions.buf_del, reload = true },
+            ["enter"] = actions.file_switch_or_edit,
+          },
+        },
         buffers = {
           actions = {
             ["ctrl-d"] = { fn = actions.buf_del, reload = true },
+            ["enter"] = actions.file_switch_or_edit,
           },
         },
       })
       vim.keymap.set("n", "<leader>g", fzf.live_grep_native)
       vim.keymap.set("n", "<leader>s", fzf.files)
       vim.keymap.set("n", "gr", fzf.lsp_references)
+      vim.keymap.set("n", "gd", fzf.lsp_definitions)
+      vim.keymap.set("n", "gD", fzf.lsp_typedefs)
       vim.keymap.set("n", "gi", fzf.lsp_implementations)
       vim.keymap.set("n", "<leader>ld", fzf.lsp_workspace_diagnostics)
       vim.keymap.set("n", "<leader>ls", fzf.lsp_document_symbols)

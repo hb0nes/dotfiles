@@ -137,9 +137,9 @@ local opts = {
         -- disable jump labels when not enabled, when using a count,
         -- or when recording/executing registers
         opts.jump_labels = opts.jump_labels
-          and vim.v.count == 0
-          and vim.fn.reg_executing() == ""
-          and vim.fn.reg_recording() == ""
+            and vim.v.count == 0
+            and vim.fn.reg_executing() == ""
+            and vim.fn.reg_recording() == ""
 
         -- Show jump labels only in operator-pending mode
         -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
@@ -157,7 +157,8 @@ local opts = {
       -- by removing them from the list.
       -- If you rather use another key, you can map them
       -- to something else, e.g., { [";"] = "L", [","] = H }
-      keys = { "f", "F", "t", "T", ";", "," },
+      --keys = { "f", "F", "t", "T", ";", "," },
+      keys = { "f", "t", "T", ";", "," },
       ---@alias Flash.CharActions table<string, "next" | "prev" | "right" | "left">
       -- The direction for `prev` and `next` is determined by the motion.
       -- `left` and `right` are always left and right.
@@ -210,8 +211,8 @@ local opts = {
       relative = "editor",
       width = 1, -- when <=1 it's a percentage of the editor width
       height = 1,
-      row = -1, -- when negative it's an offset from the bottom
-      col = 0, -- when negative it's an offset from the right
+      row = -1,  -- when negative it's an offset from the bottom
+      col = 0,   -- when negative it's an offset from the right
       zindex = 1000,
     },
   },
@@ -235,7 +236,7 @@ return {
     config = function()
       local flash = require("flash")
       vim.api.nvim_set_hl(0, "FlashJump", { fg = "#ffffff", bg = "#f50f0f", bold = true })
-      vim.keymap.set("n", "\\", flash.treesitter)
+      vim.keymap.set("n", "\\", flash.treesitter, { desc = "Jump around" })
       flash.setup(opts)
     end,
   },

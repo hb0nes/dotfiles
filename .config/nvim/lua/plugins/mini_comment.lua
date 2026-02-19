@@ -44,7 +44,7 @@ local opts =
 
 return {
   {
-    "echasnovski/mini.comment",
+    "nvim-mini/mini.comment",
     version = false,
     config = function()
       require("mini.comment").setup(opts)

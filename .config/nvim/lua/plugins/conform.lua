@@ -10,7 +10,7 @@ local opts = {
     sh = { "shfmt" },
     sql = { "sqlfluff" },
     toml = { "taplo" },
-    yaml = { "prettier" },
+    yaml = { "prettier_yaml" },
   },
   formatters = {
     stylua = {
@@ -18,6 +18,13 @@ local opts = {
     },
     rustfmt = {
       prepend_args = { "--config", "tab_spaces=4,max_width=200" },
+    },
+    prettier_yaml = {
+      command = "prettier",
+      stdin = true,
+      args = function(self, ctx)
+        return { "--stdin-filepath", ctx.filename, "--print-width", "200", "--parser", "yaml" }
+      end,
     },
   },
   format_on_save = function()
@@ -35,7 +42,7 @@ local opts = {
 }
 
 local function configure()
-  vim.keymap.set("n", "<leader>f", require("conform").format)
+  vim.keymap.set("n", "<leader>F", require("conform").format, { desc = "format file" })
   require("conform").setup(opts)
 end
 

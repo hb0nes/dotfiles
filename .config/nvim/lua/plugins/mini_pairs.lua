@@ -22,17 +22,17 @@ local opts =
       ["}"] = { action = "close", pair = "{}", neigh_pattern = "[^\\]." },
       [">"] = { action = "close", pair = "<>" },
 
-      ['"'] = { action = "closeopen", pair = '""', neigh_pattern = "[^%a\\]." },
-      ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^%a\\]." },
-      ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^%a\\]." },
+      ['"'] = { action = "closeopen", pair = '""', neigh_pattern = "[^%g\\][^%g]" },
+      ["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^%g\\][^%g]" },
+      ["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^%g\\][^%g]" },
     },
   }
 return {
   {
-    "echasnovski/mini.pairs",
+    "nvim-mini/mini.pairs",
     version = false,
     config = function()
-      require("mini.pairs").setup(opts)
+      -- require("mini.pairs").setup(opts)
     end,
   },
 }

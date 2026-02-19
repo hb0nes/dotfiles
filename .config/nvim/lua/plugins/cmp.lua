@@ -1,5 +1,5 @@
 --set pumheight for max completion items
-vim.o.pumheight = 15
+vim.o.pumheight = 25
 
 local cmp_kinds = {
   Text = "  ",
@@ -54,6 +54,22 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
 
 local function configure()
   local cmp = require("cmp")
+  local types = require("cmp.types")
+  local compare = require("cmp.config.compare")
+
+  ---@type table<integer, integer>
+  local modified_priority = {
+    [types.lsp.CompletionItemKind.Variable] = types.lsp.CompletionItemKind.Method,
+    [types.lsp.CompletionItemKind.Field] = 1, -- top
+    [types.lsp.CompletionItemKind.Snippet] = 2, -- top
+    [types.lsp.CompletionItemKind.Keyword] = 3, -- top
+    [types.lsp.CompletionItemKind.Text] = 100, -- bottom
+  }
+  ---@param kind integer: kind of completion entry
+  local function modified_kind(kind)
+    return modified_priority[kind] or kind
+  end
+
   local opts = {
     preselect = cmp.PreselectMode.None,
     performance = {
@@ -96,6 +112,7 @@ local function configure()
       ["<C-u>"] = cmp.mapping.scroll_docs(-4),
       ["<C-d>"] = cmp.mapping.scroll_docs(4),
       ["<A-c>"] = cmp.mapping.complete(),
+      ["<C-space>"] = cmp.mapping.complete(),
       ["<CR>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Insert,
         select = false,
@@ -119,34 +136,42 @@ local function configure()
       end, { "i", "s" }),
     },
     sources = cmp.config.sources({
-      { name = "nvim_lsp", priority = 8 },
-      { name = "buffer", priority = 7 },
+      { name = "nvim_lsp", priority = 9 },
+      { name = "copilot", priority = 8 },
+      { name = "path", priority = 7 },
       { name = "luasnip", priority = 6 },
-      { name = "path", priority = 5 },
+      { name = "buffer", priority = 5 },
     }),
     sorting = {
-      priority_weight = 1.0,
+      -- https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/compare.lua
       comparators = {
-        cmp.config.compare.locality,
-        cmp.config.compare.recently_used,
-        cmp.config.compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
-        cmp.config.compare.offset,
-        cmp.config.compare.order,
+        compare.exact,
+        compare.offset,
+        -- function(entry1, entry2) -- sort by compare kind (Variable, Function etc)
+        --   local kind1 = modified_kind(entry1:get_kind())
+        --   local kind2 = modified_kind(entry2:get_kind())
+        --   if kind1 ~= kind2 then
+        --     return kind1 - kind2 < 0
+        --   end
+        -- end,
+        compare.recently_used,
+        compare.score,
+        compare.order,
       },
     },
   }
 
- cmp.setup.cmdline({ "/", "?" }, {
-   view = {
-     entries = { name = "wildmenu", separator = "|" },
-   },
-   mapping = cmp.mapping.preset.cmdline(),
-   window = { completion = { col_offset = 0 } },
-   formatting = { fields = { "abbr" } },
-   sources = {
-     { name = "buffer" },
-   },
- })
+  cmp.setup.cmdline({ "/", "?" }, {
+    view = {
+      entries = { name = "wildmenu", separator = "|" },
+    },
+    mapping = cmp.mapping.preset.cmdline(),
+    window = { completion = { col_offset = 0 } },
+    formatting = { fields = { "abbr" } },
+    sources = {
+      { name = "buffer" },
+    },
+  })
 
   cmp.setup.cmdline(":", {
     mapping = cmp.mapping.preset.cmdline(),
